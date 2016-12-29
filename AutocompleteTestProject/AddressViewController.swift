@@ -12,7 +12,7 @@ import CoreLocation
 let GOOGLE_PLACE_API_KEY = ""
 let GOOGLE_PLACE_DEFAULT_LOCATION = "48.8567,2.3508"
 
-class ViewController: UIViewController, HBAutocompleteDataSource, HBAutocompleteCustomActionsDelegate {
+class AddressViewController: UIViewController, HBAutocompleteDataSource, HBAutoCompleteActionsDelegate {
     
     @IBOutlet weak var autocomplete: HBAutocompleteView!
     
@@ -22,7 +22,8 @@ class ViewController: UIViewController, HBAutocompleteDataSource, HBAutocomplete
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.graphicalSettings()
+        //self.autocomplete.removeHistory()
+        self.setGraphicalSettings()
         self.setAutocomplete()
     }
 
@@ -41,13 +42,14 @@ class ViewController: UIViewController, HBAutocompleteDataSource, HBAutocomplete
         self.autocomplete.maxVisibleRow = 7
         self.autocomplete.minCharactersforDataSource = 2
         self.autocomplete.historicalImageName = "SearchHistory"
-        self.autocomplete.customActionsDelegate = self
+        self.autocomplete.actionsDelegate = self
         self.autocomplete.withCustomActions = true
         self.autocomplete.customActionsDescription = ["Current location"]
-        self.autocomplete.cutomActionsImageName = ["CurrentLocation"]
+        self.autocomplete.customActionsImageName = ["CurrentLocation"]
     }
     
-    func graphicalSettings() {
+    func setGraphicalSettings() {
+        self.title = "Search an adress"
         self.addToHistoryButton.layer.cornerRadius = 5.0
         self.autocomplete.layer.cornerRadius = 5.0
         self.autocomplete.layer.borderColor = UIColor.lightGray.cgColor
@@ -63,14 +65,15 @@ class ViewController: UIViewController, HBAutocompleteDataSource, HBAutocomplete
     
     @IBAction func addToHistoryButtonTapped(_ sender: Any) {
         if self.autocomplete.textField.text != nil && self.autocomplete.textField.text != "" {
-            self.autocomplete.addToSearchHistory(self.autocomplete.textField.text!)
+            //self.autocomplete.addToSearchHistory(self.autocomplete.textField.text!)
+            self.autocomplete.addToHistory(self.autocomplete.textField.text!, inputData: self.autocomplete.selectedData)
         }
     }
 
     
 //MARK: - HBAutocomplete dataSource (required)
     
-    func getSuggestions(input: String, completionHandler: @escaping ([String], Any?) -> Void) {
+    func getSuggestions(input: String, completionHandler: @escaping ([String], NSDictionary?) -> Void) {
         
         GoogleAPI.AutocompleteSuggestionsFromDefaultLocation(input) { (suggestions, places) in
             completionHandler(suggestions, places)
@@ -78,11 +81,17 @@ class ViewController: UIViewController, HBAutocompleteDataSource, HBAutocomplete
     }
     
     
-//MARK: - HBAutocomplete custom actions delegate
+//MARK: - HBAutocomplete actions delegate
     
     func didSelectCustomAction(index: Int) {
         if index == 0 {
             self.autocomplete.textField.text = "success"
+        }
+    }
+    
+    func didSelect(suggestion: String, data: Any?) {
+        if let place = data as? Place {
+            print(place.placeId)
         }
     }
     

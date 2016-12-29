@@ -26,17 +26,34 @@ let FAILED_GET_USER_LOCATION = "Failed getting user location"
 //Set your language
 let APP_LANGUAGE = "en"
 
-class Place: NSObject {
+class Place: NSObject, NSCoding {
     
-    var addressDescription: String!
-    var location:CLLocationCoordinate2D?
-    var placeId:String!
+    var addressDescription: String = ""
+    var location:String = ""
+    var placeId:String = ""
     
-    init(description:String, placeId:String) {
+    convenience required init?(coder aDecoder: NSCoder) {
+        let addressDescription = aDecoder.decodeObject(forKey: "addressDescription") as! String
+        let location = aDecoder.decodeObject(forKey: "location") as! String
+        let placeId = aDecoder.decodeObject(forKey: "placeId") as! String
+        
+        self.init(description: addressDescription, placeId: placeId, location: location)
+    }
+    
+    init(description:String, placeId:String, location:String = "") {
         super.init()
         self.addressDescription = description
         self.placeId = placeId
+        self.location = location
     }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(addressDescription, forKey: "addressDescription")
+        aCoder.encode(location, forKey: "location")
+        aCoder.encode(placeId, forKey: "placeId")
+    }
+    
+    
 }
 
 class GoogleAPI: NSObject {
@@ -45,12 +62,12 @@ class GoogleAPI: NSObject {
     
     class func AutocompleteSuggestionsFromDefaultLocation(
         _ input:String,
-        completionHandler:@escaping (_ suggestions:[String], _ data:[Place]) -> Void) {
+        completionHandler:@escaping (_ suggestions:[String], _ data:NSDictionary) -> Void) {
         
         //make URL path
         let url = GoogleAPI.makeAutocompleteURLForAPICall(input, language: nil, location: nil, radius:nil)
         var suggestions:[String] = []
-        var places:[Place] = []
+        var places = NSMutableDictionary()
         
         //make API call
         PRestAPICallMAnager.APICall("GET", url: url, postParams: nil, timeout: DEFAULT_TIMOUT, accessToken: false, success: { (jsonResponse) -> Void in
@@ -61,7 +78,8 @@ class GoogleAPI: NSObject {
                         if let description = valueDictionary["description"] as? String, let placeId = valueDictionary["place_id"] as? String {
                             suggestions.append(description)
                             let place = Place(description: description, placeId: placeId)
-                            places.append(place)
+                            //places[description] = place
+                            places.setValue(place, forKey: description)
                         }
                     }
                 }
