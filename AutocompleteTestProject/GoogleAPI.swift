@@ -36,7 +36,6 @@ class Place: NSObject, NSCoding {
         let addressDescription = aDecoder.decodeObject(forKey: "addressDescription") as! String
         let location = aDecoder.decodeObject(forKey: "location") as! String
         let placeId = aDecoder.decodeObject(forKey: "placeId") as! String
-        
         self.init(description: addressDescription, placeId: placeId, location: location)
     }
     

@@ -110,6 +110,14 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     }
     
     
+//MARK: - Utils
+    
+    func update(suggestion:String, data:Any?) {
+        self.textField.text! = suggestion
+        self.selectedData = data
+    }
+    
+    
 // MARK: - Show/Hide tableView suggestions
     
     func showSuggestions() {
