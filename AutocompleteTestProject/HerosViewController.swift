@@ -46,6 +46,7 @@ class HerosViewController: UIViewController, HBAutocompleteDataSource {
         //optionnal
         self.autocomplete.maxVisibleRow = 7
         self.autocomplete.minCharactersforDataSource = 1
+        self.autocomplete.historyStoreDomain = "hero"
 //        self.autocomplete.historicalImageName = "SearchHistory"
 //        self.autocomplete.actionsDelegate = self
 //        self.autocomplete.withCustomActions = true

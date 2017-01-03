@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8CE311C31E1BB36400560F88 /* HBAutocompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE311C21E1BB36400560F88 /* HBAutocompleteView.swift */; };
 		8CE7001C1E126A09008086A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE7001B1E126A09008086A4 /* AppDelegate.swift */; };
 		8CE700211E126A09008086A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CE7001F1E126A09008086A4 /* Main.storyboard */; };
 		8CE700231E126A09008086A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CE700221E126A09008086A4 /* Assets.xcassets */; };
@@ -18,7 +19,6 @@
 		8CE700451E127A76008086A4 /* PRestAPICallMAnager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE700431E127A76008086A4 /* PRestAPICallMAnager.swift */; };
 		8CE700491E15431B008086A4 /* AddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE700481E15431B008086A4 /* AddressViewController.swift */; };
 		8CE7004B1E154437008086A4 /* HerosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE7004A1E154437008086A4 /* HerosViewController.swift */; };
-		8CE7004D1E159261008086A4 /* HBAutocompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE7004C1E159261008086A4 /* HBAutocompleteView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8CE311C21E1BB36400560F88 /* HBAutocompleteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HBAutocompleteView.swift; path = ../HBAutocompleteView.swift; sourceTree = "<group>"; };
 		8CE700181E126A09008086A4 /* AutocompleteTestProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutocompleteTestProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CE7001B1E126A09008086A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8CE700201E126A09008086A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -45,7 +46,6 @@
 		8CE700431E127A76008086A4 /* PRestAPICallMAnager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PRestAPICallMAnager.swift; sourceTree = "<group>"; };
 		8CE700481E15431B008086A4 /* AddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressViewController.swift; sourceTree = "<group>"; };
 		8CE7004A1E154437008086A4 /* HerosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HerosViewController.swift; sourceTree = "<group>"; };
-		8CE7004C1E159261008086A4 /* HBAutocompleteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HBAutocompleteView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +112,7 @@
 		8CE7003E1E12790C008086A4 /* HBAutocomplete */ = {
 			isa = PBXGroup;
 			children = (
-				8CE7004C1E159261008086A4 /* HBAutocompleteView.swift */,
+				8CE311C21E1BB36400560F88 /* HBAutocompleteView.swift */,
 			);
 			name = HBAutocomplete;
 			sourceTree = "<group>";
@@ -235,7 +235,7 @@
 				8CE7004B1E154437008086A4 /* HerosViewController.swift in Sources */,
 				8CE700491E15431B008086A4 /* AddressViewController.swift in Sources */,
 				8CE7001C1E126A09008086A4 /* AppDelegate.swift in Sources */,
-				8CE7004D1E159261008086A4 /* HBAutocompleteView.swift in Sources */,
+				8CE311C31E1BB36400560F88 /* HBAutocompleteView.swift in Sources */,
 				8CE700441E127A76008086A4 /* PRestAPICallMAnager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

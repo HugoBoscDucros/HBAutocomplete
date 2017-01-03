@@ -37,6 +37,7 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     
     //favorites
     var favoritesDescription:[String] = []
+    var favoritesData:NSDictionary?
     var favoritesImageName:[String] = []
     
     //historical
@@ -70,9 +71,10 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     var tableView:UITableView!
     
     //keys for plist files & UserDefault
-    let AUTOCOMPLETE_HISTORY_FREQUENCY = "autocompleteHistoryFrequency.plist"
-    let AUTOCOMPLETE_HISTORY_DATA = "autocompleteHistoryData.plist"
-    let AUTOCOMPLETE_LAST_SEARCH = "AutocompleteLastSearch"
+    var historyStoreDomain = "default"
+    private var AUTOCOMPLETE_HISTORY_FREQUENCY:String!
+    private var AUTOCOMPLETE_HISTORY_DATA:String!
+    private var AUTOCOMPLETE_LAST_SEARCH:String!
     
     @IBOutlet var textField:UITextField!
     
@@ -95,10 +97,20 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
             self.tableView.layer.borderColor = self.layer.borderColor
             self.tableView.backgroundColor = self.backgroundColor
         }
+        self.setHistoryStoreFilesName()
     }
     
     
-    // MARK: - Show/Hide tableView suggestions
+//MARK: - Settings
+    
+    private func setHistoryStoreFilesName() {
+        self.AUTOCOMPLETE_HISTORY_FREQUENCY = historyStoreDomain + "AutocompleteHistoryFrequency.plist"
+        self.AUTOCOMPLETE_HISTORY_DATA = historyStoreDomain + "AutocompleteHistoryData.plist"
+        self.AUTOCOMPLETE_LAST_SEARCH = historyStoreDomain + "AutocompleteLastSearch"
+    }
+    
+    
+// MARK: - Show/Hide tableView suggestions
     
     func showSuggestions() {
         self.tableView.reloadData()
@@ -379,7 +391,9 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
         if self.withFavorite {
             for favorite in self.favoritesDescription {
                 self.suggestions.append(favorite)
-                if historyDatas != nil, let favoriteData = historyDatas!.object(forKey: favorite) {
+                if self.favoritesData != nil, let favoriteData = historyDatas!.object(forKey: favorite) {
+                    self.dataDictionary.setValue(favoriteData, forKey: favorite)
+                } else if historyDatas != nil, let favoriteData = historyDatas!.object(forKey: favorite) {
                     self.dataDictionary.setValue(favoriteData, forKey: favorite)
                 }
             }
@@ -411,7 +425,9 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
                 let scaleFavorite = (favorite as NSString).substring(to: (input as NSString).length)
                 if (input.lowercased() == scaleFavorite.lowercased()) {
                     self.suggestions.append(favorite)
-                    if historyDatas != nil, let favoriteData = historyDatas!.object(forKey: favorite) {
+                    if self.favoritesData != nil, let favoriteData = historyDatas!.object(forKey: favorite) {
+                        self.dataDictionary.setValue(favoriteData, forKey: favorite)
+                    } else if historyDatas != nil, let favoriteData = historyDatas!.object(forKey: favorite) {
                         self.dataDictionary.setValue(favoriteData, forKey: favorite)
                     }
                 }
