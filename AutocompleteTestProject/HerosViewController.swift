@@ -8,10 +8,10 @@
 
 import UIKit
 
-class HerosViewController: UIViewController {
+class HerosViewController: UIViewController, HBAutocompleteDataSource {
     
     
-    var heroList:[String] = ["Batman", "Superman", ]
+    var heroList:[String] = ["Batman","Catwoman", "Flash", "Spiderman", "Superman", "Zoro" ]
     
     @IBOutlet weak var autocomplete: HBAutocompleteView!
 
@@ -22,6 +22,7 @@ class HerosViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.setGraphicalSettings()
+        self.setAutocomplete()
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,11 +40,31 @@ class HerosViewController: UIViewController {
         self.autocomplete.layer.borderWidth = 1
     }
     
+    func setAutocomplete() {
+        //required
+        self.autocomplete.dataSource = self
+        //optionnal
+        self.autocomplete.maxVisibleRow = 7
+        self.autocomplete.minCharactersforDataSource = 1
+//        self.autocomplete.historicalImageName = "SearchHistory"
+//        self.autocomplete.actionsDelegate = self
+//        self.autocomplete.withCustomActions = true
+//        self.autocomplete.customActionsDescription = ["Current location"]
+//        self.autocomplete.customActionsImageName = ["CurrentLocation"]
+    }
+    
     
 //MARK: - Actions
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.autocomplete.textField.resignFirstResponder()
+    }
+    
+    
+//MARK: - HBAutocomplete dataSource
+    
+    func getSuggestions(input: String, completionHandler: @escaping ([String], NSDictionary?) -> Void) {
+        completionHandler(self.heroList, nil)
     }
 
     /*

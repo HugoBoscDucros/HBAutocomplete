@@ -35,6 +35,14 @@ class AddressViewController: UIViewController, HBAutocompleteDataSource, HBAutoC
 
 //MARK: - Settings
     
+    func setGraphicalSettings() {
+        self.title = "Search an adress"
+        self.addToHistoryButton.layer.cornerRadius = 5.0
+        self.autocomplete.layer.cornerRadius = 5.0
+        self.autocomplete.layer.borderColor = UIColor.lightGray.cgColor
+        self.autocomplete.layer.borderWidth = 1
+    }
+    
     func setAutocomplete() {
         //required
         self.autocomplete.dataSource = self
@@ -46,14 +54,6 @@ class AddressViewController: UIViewController, HBAutocompleteDataSource, HBAutoC
         self.autocomplete.withCustomActions = true
         self.autocomplete.customActionsDescription = ["Current location"]
         self.autocomplete.customActionsImageName = ["CurrentLocation"]
-    }
-    
-    func setGraphicalSettings() {
-        self.title = "Search an adress"
-        self.addToHistoryButton.layer.cornerRadius = 5.0
-        self.autocomplete.layer.cornerRadius = 5.0
-        self.autocomplete.layer.borderColor = UIColor.lightGray.cgColor
-        self.autocomplete.layer.borderWidth = 1
     }
     
     
