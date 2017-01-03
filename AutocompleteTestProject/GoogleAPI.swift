@@ -67,7 +67,7 @@ class GoogleAPI: NSObject {
         //make URL path
         let url = GoogleAPI.makeAutocompleteURLForAPICall(input, language: nil, location: nil, radius:nil)
         var suggestions:[String] = []
-        var places = NSMutableDictionary()
+        let places = NSMutableDictionary()
         
         //make API call
         PRestAPICallMAnager.APICall("GET", url: url, postParams: nil, timeout: DEFAULT_TIMOUT, accessToken: false, success: { (jsonResponse) -> Void in
@@ -83,10 +83,6 @@ class GoogleAPI: NSObject {
                         }
                     }
                 }
-                //print for verification
-//                for suggestion in suggestions {
-//                    print (suggestion)
-//                }
                 DispatchQueue.main.async {
                     completionHandler(suggestions,places)
                 }

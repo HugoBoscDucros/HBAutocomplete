@@ -73,8 +73,7 @@ class AddressViewController: UIViewController, HBAutocompleteDataSource, HBAutoC
     
 //MARK: - HBAutocomplete dataSource (required)
     
-    func getSuggestions(input: String, completionHandler: @escaping ([String], NSDictionary?) -> Void) {
-        
+    func getSuggestions(autocomplete: HBAutocompleteView, input: String, completionHandler: @escaping ([String], NSDictionary?) -> Void) {
         GoogleAPI.AutocompleteSuggestionsFromDefaultLocation(input) { (suggestions, places) in
             completionHandler(suggestions, places)
         }
@@ -83,13 +82,13 @@ class AddressViewController: UIViewController, HBAutocompleteDataSource, HBAutoC
     
 //MARK: - HBAutocomplete actions delegate
     
-    func didSelectCustomAction(index: Int) {
+    func didSelectCustomAction(autocomplete: HBAutocompleteView, index: Int) {
         if index == 0 {
             self.autocomplete.textField.text = "success"
         }
     }
     
-    func didSelect(suggestion: String, data: Any?) {
+    func didSelect(autocomplete: HBAutocompleteView, suggestion: String, data: Any?) {
         if let place = data as? Place {
             print(place.placeId)
         }

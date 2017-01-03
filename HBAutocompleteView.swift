@@ -7,22 +7,22 @@
 //
 
 protocol HBAutocompleteDataSource {
-    func getSuggestions(input:String, completionHandler:@escaping(_ suggestions:[String], _ data:NSDictionary?) -> Void)
+    func getSuggestions(autocomplete:HBAutocompleteView, input:String, completionHandler:@escaping(_ suggestions:[String], _ data:NSDictionary?) -> Void)
 }
 
 protocol HBAutoCompleteActionsDelegate {
-    func didSelect(suggestion:String, data:Any?)
-    func didSelectCustomAction(index:Int)
+    func didSelect(autocomplete:HBAutocompleteView, suggestion:String, data:Any?)
+    func didSelectCustomAction(autocomplete:HBAutocompleteView, index:Int)
 }
 
-protocol HBAutoCompleteTableViewDelegate : class {
-    func tableViewDidShow(_ tableView:UITableView)
-    func tableViewDidHide(_ tableView:UITableView)
+protocol HBAutoCompleteTableViewDelegate {
+    func tableViewDidShow(autocomplete:HBAutocompleteView, tableView:UITableView)
+    func tableViewDidHide(autocomplete:HBAutocompleteView, tableView:UITableView)
 }
 
 protocol HBAutocompleteTextFieldDelegate {
-    func autocompleteTextFieldDidBeginEditing(_ textField:UITextField)
-    func autocompleteTextFieldDidEndEditing(_ autoComplete:UITextField)
+    func autocompleteTextFieldDidBeginEditing(autocomplete:HBAutocompleteView, textField:UITextField)
+    func autocompleteTextFieldDidEndEditing(autocomplete:HBAutocompleteView, textField:UITextField)
 }
 
 import UIKit
@@ -132,12 +132,12 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
         self.tableView.frame = CGRect(x: x, y: y, width: width, height: height)
         view.addSubview(self.tableView)
         self.tableView.delegate = self
-        self.tableViewDelegate?.tableViewDidShow(self.tableView)
+        self.tableViewDelegate?.tableViewDidShow(autocomplete:self, tableView:self.tableView)
     }
     
     func hideSuggestions() {
         self.tableView.removeFromSuperview()
-        self.tableViewDelegate?.tableViewDidHide(self.tableView)
+        self.tableViewDelegate?.tableViewDidHide(autocomplete:self, tableView:self.tableView)
     }
     
     
@@ -179,7 +179,7 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.textField.resignFirstResponder()
         if self.customActionsDescription.contains(self.suggestions[indexPath.row]) {
-            self.actionsDelegate?.didSelectCustomAction(index: self.customActionsDescription.index(of: self.suggestions[indexPath.row])!)
+            self.actionsDelegate?.didSelectCustomAction(autocomplete:self, index: self.customActionsDescription.index(of: self.suggestions[indexPath.row])!)
             self.hideSuggestions()
             tableView.deselectRow(at: indexPath, animated: true)
             
@@ -194,7 +194,7 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
             } else {
                 self.selectedData = nil
             }
-            self.actionsDelegate?.didSelect(suggestion: self.textField.text!, data: self.selectedData)
+            self.actionsDelegate?.didSelect(autocomplete:self, suggestion: self.textField.text!, data: self.selectedData)
             //you can add to search historical here if needed :
             //self.addToSearchHistory(textField.text!)
         }
@@ -223,14 +223,14 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if self.textFieldDelegate != nil {
-            self.textFieldDelegate?.autocompleteTextFieldDidBeginEditing(textField)
+            self.textFieldDelegate?.autocompleteTextFieldDidBeginEditing(autocomplete:self, textField:textField)
         }
         self.loadSuggestions(textField.text!)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if self.textFieldDelegate != nil {
-            self.textFieldDelegate?.autocompleteTextFieldDidEndEditing(textField)
+            self.textFieldDelegate?.autocompleteTextFieldDidEndEditing(autocomplete:self, textField:textField)
         }
         self.hideSuggestions()
     }
@@ -464,7 +464,7 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     
     func loadSuggestions(_ input:String) {
         if (input as NSString).length >= self.minCharactersforDataSource && self.dataSource != nil {
-            self.dataSource!.getSuggestions(input: input, completionHandler: { (suggestions, data) in
+            self.dataSource!.getSuggestions(autocomplete:self, input: input, completionHandler: { (suggestions, data) in
                 self.loadStoredResults(input: input)
                 self.addDataSourceSuggestions(suggestions: suggestions, data: data)
                 self.showSuggestions()
