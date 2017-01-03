@@ -244,7 +244,7 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
 // MARK: - Historical methods
     
     //MARK: methods to implement in your project
-    func addToHistory(_ input:String, inputData:Any?) {
+    func addToHistory(_ input:String, inputData:Any? = nil) {
         let directories = NSSearchPathForDirectoriesInDomains(.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
         let formatedInput = "H:" + input
         if let documents = directories.first {
@@ -256,20 +256,19 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
                 if let frequency = loadedfrequency {
                     if let data = loadedData {
                         if inputData != nil {
-                            data[input] = NSKeyedArchiver.archivedData(withRootObject: inputData!)//inputData!
-                            if data.write(toFile: dataURL!.path, atomically: true) {
-                                print("data stored with sucess")
-                            } else {
-                                print("error storing data")
-                            }
+                            data[input] = NSKeyedArchiver.archivedData(withRootObject: inputData!)
+                            self.writeData(data: data, dataURL: dataURL!)
+                        } else if self.selectedData != nil {
+                            data[input] = NSKeyedArchiver.archivedData(withRootObject: self.selectedData!)
+                            self.writeData(data: data, dataURL: dataURL!)
                         }
+                        
                     } else if inputData != nil {
                         let data = NSDictionary(object: NSKeyedArchiver.archivedData(withRootObject: inputData!), forKey: input as NSCopying)
-                        if data.write(toFile: dataURL!.path, atomically: true) {
-                            print("data stored with sucess")
-                        } else {
-                            print("error storing data")
-                        }
+                        self.writeData(data: data, dataURL: dataURL!)
+                    } else if self.selectedData != nil {
+                        let data = NSDictionary(object: NSKeyedArchiver.archivedData(withRootObject: self.selectedData!), forKey: input as NSCopying)
+                        self.writeData(data: data, dataURL: dataURL!)
                     }
                     if let inputFrequency = frequency[input] as? NSNumber {
                         frequency[formatedInput] = (inputFrequency as Int + 1) as NSNumber
@@ -277,25 +276,18 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
                     } else {
                         frequency[formatedInput] = 1 as NSNumber
                     }
-                    if frequency.write(toFile: frequencyURL!.path, atomically: true) {
-                        print("frequency stored with sucess")
-                    } else {
-                        print("error storing frequency")
-                    }
+                    self.writeData(data: frequency, dataURL: frequencyURL!)
+//                    if frequency.write(toFile: frequencyURL!.path, atomically: true) {
+//                        print("frequency stored with sucess")
+//                    } else {
+//                        print("error storing frequency")
+//                    }
                 } else {
                     let frequency = NSDictionary(object: 1 as NSNumber, forKey: formatedInput as NSCopying)
-                    if frequency.write(toFile: frequencyURL!.path, atomically: true) {
-                        print("frequency stored with sucess")
-                    } else {
-                        print("error storing frequency")
-                    }
+                    self.writeData(data: frequency, dataURL: frequencyURL!)
                     if inputData != nil {
                         let data = NSDictionary(object: NSKeyedArchiver.archivedData(withRootObject: inputData!), forKey: input as NSCopying)
-                        if data.write(toFile: dataURL!.path, atomically: true) {
-                            print("data stored with sucess")
-                        } else {
-                            print("error storing data")
-                        }
+                        self.writeData(data: data, dataURL: dataURL!)
                     }
                 }
                 UserDefaults.standard.set(("H:" + input), forKey: AUTOCOMPLETE_LAST_SEARCH)
@@ -323,6 +315,22 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     
     
 //MARK: internal methodes for historical
+    
+    private func writeData(data:NSDictionary, dataURL:URL) {
+        if data.write(toFile: dataURL.path, atomically: true) {
+            print("data stored with sucess")
+        } else {
+            print("error storing data")
+        }
+    }
+    
+//    private func writeFrequency(frequency:NSDictionary, frequencyURL:URL) {
+//        if frequency.write(toFile: frequencyURL.path, atomically: true) {
+//            print("frequency stored with sucess")
+//        } else {
+//            print("error storing frequency")
+//        }
+//    }
     
     //new methodes
     private func getHistory() -> (frequency:NSDictionary?, data:NSDictionary?) {

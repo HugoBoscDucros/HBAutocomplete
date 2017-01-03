@@ -66,7 +66,7 @@ class AddressViewController: UIViewController, HBAutocompleteDataSource, HBAutoC
     @IBAction func addToHistoryButtonTapped(_ sender: Any) {
         if self.autocomplete.textField.text != nil && self.autocomplete.textField.text != "" {
             //self.autocomplete.addToSearchHistory(self.autocomplete.textField.text!)
-            self.autocomplete.addToHistory(self.autocomplete.textField.text!, inputData: self.autocomplete.selectedData)
+            self.autocomplete.addToHistory(self.autocomplete.textField.text!)//, inputData: self.autocomplete.selectedData)
         }
     }
 
