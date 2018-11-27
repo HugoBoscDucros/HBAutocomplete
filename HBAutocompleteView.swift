@@ -183,6 +183,8 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     
     // MARK: - Show/Hide tableView suggestions
     
+    // MARK: - Show/Hide tableView suggestions
+    
     func showSuggestions() {
         //In case of dataSource or delegate concurancy
         self.tableView.dataSource = self
@@ -360,15 +362,9 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     //MARK: methods to implement in your project
     func addToHistory(input:String? = nil, inputData:Any? = nil) {
         self.setHistoryStoreFilesName()
+        let newInput = input ?? self.textField.text!
+        let newInputData = inputData ?? self.selectedData
         let directories = NSSearchPathForDirectoriesInDomains(.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-        var newInput = self.getActiveText()//textField.text!
-        var newInputData = self.selectedData
-        if input != nil {
-            newInput = input!
-        }
-        if inputData != nil {
-            newInputData = inputData!
-        }
         let formatedInput = "H:" + newInput
         if let documents = directories.first {
             if let urlDocuments = NSURL(string: documents) {
@@ -391,9 +387,10 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
                     var data = NSMutableDictionary()
                     if let loadedData = NSMutableDictionary(contentsOfFile: dataURL.path) {
                         data = loadedData
+                        //print(data)
                     }
-                    if newInputData != nil {
-                        data[newInput] = NSKeyedArchiver.archivedData(withRootObject: newInputData!)
+                    if let newData = newInputData {
+                        data[newInput] = NSKeyedArchiver.archivedData(withRootObject: newData)
                     }
                     self.writeData(data: data, dataURL: dataURL)
                 }
@@ -453,6 +450,8 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
         } else {
             print("error storing data")
         }
+        let success = data.write(toFile: dataURL.path, atomically: true)
+        print(success ? "data stored with sucess":"error storing data")
     }
     
     //new methodes
@@ -606,10 +605,12 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     func loadSuggestions(_ input:String) {
         if (input as NSString).length >= self.minCharactersforDataSource, let dataSource = self.dataSource {
             dataSource.getSuggestions(autocomplete:self, input: input, completionHandler: { (suggestions, data, suggestionImages) in
-                self.suggestionImagesNames = suggestionImages
-                self.loadStoredResults(input: input)
-                self.addDataSourceSuggestions(suggestions: suggestions, data: data)
-                self.showSuggestions()
+                if self.textField.isEditing {
+                    self.suggestionImagesNames = suggestionImages
+                    self.loadStoredResults(input: input)
+                    self.addDataSourceSuggestions(suggestions: suggestions, data: data)
+                    self.showSuggestions()
+                }
             })
         } else if (input as NSString).length > 0 {
             self.loadStoredResults(input: input)
