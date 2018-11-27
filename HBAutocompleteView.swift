@@ -6,21 +6,21 @@
 //  Copyright © 2016 Hugo Bosc-Ducros. All rights reserved.
 //
 
-protocol HBAutocompleteDataSource {
-    func getSuggestions(autocomplete:HBAutocompleteView, input:String, completionHandler:@escaping(_ suggestions:[String], _ data:NSDictionary?) -> Void)
+protocol HBAutocompleteDataSource:class {
+    func getSuggestions(autocomplete:HBAutocompleteView, input:String, completionHandler:@escaping(_ suggestions:[String], _ data:NSDictionary?, _ suggestionImages:[String:String]?) -> Void)
 }
 
-protocol HBAutoCompleteActionsDelegate {
-    func didSelect(autocomplete:HBAutocompleteView, suggestion:String, data:Any?)
+protocol HBAutoCompleteActionsDelegate:class {
+    func didSelect(autocomplete:HBAutocompleteView, index:Int, suggestion:String, data:Any?)
     func didSelectCustomAction(autocomplete:HBAutocompleteView, index:Int)
 }
 
-protocol HBAutoCompleteTableViewDelegate {
+protocol HBAutoCompleteTableViewDelegate:class {
     func tableViewDidShow(autocomplete:HBAutocompleteView, tableView:UITableView)
     func tableViewDidHide(autocomplete:HBAutocompleteView, tableView:UITableView)
 }
 
-protocol HBAutocompleteTextFieldDelegate {
+protocol HBAutocompleteTextFieldDelegate:class {
     func autocompleteTextFieldDidBeginEditing(autocomplete:HBAutocompleteView, textField:UITextField)
     func autocompleteTextFieldDidEndEditing(autocomplete:HBAutocompleteView, textField:UITextField)
 }
@@ -29,7 +29,7 @@ import UIKit
 
 class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {
     
-//customable variables
+    //customable variables
     
     //custom lines actions
     var customActionsDescription:[String] = []
@@ -43,31 +43,32 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     //historical
     var historicalImageName:String?
     
-
+    
     //Graphical settings (you can set it in the view controller to change displaying style)
     var maxVisibleRow:Int = 5
     var maxHistoricalRow:Int = 3
     var minCharactersforDataSource:Int = 3
     var cellFont:UIFont!
+    var cellHeight:CGFloat!
     //optional features
     var withFavorite:Bool = false
-    var withCustomActions:Bool = false
+    //var withCustomActions:Bool = false
     var tableViewIsReproducingViewStyle = true
     var customActionsAreAllaysVisible = false
     
-//internal variables
+    //internal variables
     
     //dataSource & actions delegates
-    var dataSource:HBAutocompleteDataSource?
-    var actionsDelegate:HBAutoCompleteActionsDelegate?
+    weak var dataSource:HBAutocompleteDataSource?
+    weak var actionsDelegate:HBAutoCompleteActionsDelegate?
     //delegates for subviews & layers gestion
-    var tableViewDelegate:HBAutoCompleteTableViewDelegate?
-    var textFieldDelegate:HBAutocompleteTextFieldDelegate?
+    weak var tableViewDelegate:HBAutoCompleteTableViewDelegate?
+    weak var textFieldDelegate:HBAutocompleteTextFieldDelegate?
     
-    //var suggestionsDictionnary = NSDictionary()
     var dataDictionary = NSMutableDictionary()
     var selectedData:Any?
     var suggestions:[String] = []
+    var suggestionImagesNames:[String:String]?
     var tableView:UITableView!
     
     //keys for plist files & UserDefault
@@ -81,11 +82,8 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     
     // MARK: - Instanciate method
     
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
+    
     override func draw(_ rect: CGRect) {
-        self.textField.clearButtonMode = UITextFieldViewMode.always
-        self.textField.autocorrectionType = UITextAutocorrectionType.no
         self.tableView = UITableView()
         self.tableView.allowsSelection = true
         self.tableView.delegate = self
@@ -101,7 +99,7 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     }
     
     
-//MARK: - Settings
+    //MARK: - Settings
     
     private func setHistoryStoreFilesName() {
         self.AUTOCOMPLETE_HISTORY_FREQUENCY = historyStoreDomain + "AutocompleteHistoryFrequency.plist"
@@ -110,15 +108,44 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     }
     
     
-//MARK: - Utils
+    //MARK: - Utils
     
     func update(suggestion:String, data:Any?) {
         self.textField.text! = suggestion
         self.selectedData = data
     }
     
+    private func getSuggestionImageNames() -> [String:String] {
+        var imageNames = [String:String]()
+        for suggestion in suggestions {
+            if self.customActionsDescription.count > 0 && self.customActionsImageName.count > 0, self.customActionsDescription.contains(suggestion) {
+                if self.customActionsImageName.count == self.customActionsDescription.count, let index = self.customActionsDescription.index(of: suggestion) {
+                    imageNames[suggestion] = self.customActionsImageName[index]
+                } else if self.customActionsImageName.count > 0 {
+                    imageNames[suggestion] = self.customActionsImageName.first!
+                }
+            }
+            if self.withFavorite && self.favoritesImageName.count > 0, self.favoritesDescription.contains(suggestion) {
+                if self.favoritesImageName.count == self.favoritesDescription.count, let index = self.favoritesDescription.index(of: suggestion) {
+                    imageNames[suggestion] = self.favoritesImageName[index]
+                } else if self.favoritesImageName.count > 0 {
+                    imageNames[suggestion] = self.favoritesImageName.first!
+                }
+            }
+            if let historicalImage = self.historicalImageName,(suggestion as NSString).length > 2, (suggestion as NSString).substring(to: 2) == "H:" {
+                imageNames[suggestion] = historicalImage
+            }
+        }
+        if let suggestionImageNameDictionary = self.suggestionImagesNames {
+            suggestionImageNameDictionary.forEach({ (key, value) in
+                imageNames[key] = value
+            })
+        }
+        return imageNames
+    }
     
-// MARK: - Show/Hide tableView suggestions
+    
+    // MARK: - Show/Hide tableView suggestions
     
     func showSuggestions() {
         self.tableView.reloadData()
@@ -129,18 +156,19 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
         if (self.suggestions.count > self.maxVisibleRow) {
             height = self.frame.height * CGFloat(self.maxVisibleRow) as CGFloat
         }
-        var view = self.superview!
-        while view.superview != nil {
+        if var view = self.superview {
+            while let superview =  view.superview {
+                x += view.frame.origin.x
+                y += view.frame.origin.y
+                view = superview
+            }
             x += view.frame.origin.x
             y += view.frame.origin.y
-            view = view.superview!
+            self.tableView.frame = CGRect(x: x, y: y, width: width, height: height)
+            view.addSubview(self.tableView)
+            //self.tableView.delegate = self
+            self.tableViewDelegate?.tableViewDidShow(autocomplete:self, tableView:self.tableView)
         }
-        x += view.frame.origin.x
-        y += view.frame.origin.y
-        self.tableView.frame = CGRect(x: x, y: y, width: width, height: height)
-        view.addSubview(self.tableView)
-        self.tableView.delegate = self
-        self.tableViewDelegate?.tableViewDidShow(autocomplete:self, tableView:self.tableView)
     }
     
     func hideSuggestions() {
@@ -149,7 +177,7 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     }
     
     
-// MARK: - tableView delagate & datasource
+    // MARK: - tableView delagate & datasource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
@@ -158,54 +186,80 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
         } else {
             cell.textLabel?.font = self.textField.font
         }
-        let lineString = self.suggestions[indexPath.row]
-        cell.textLabel!.text = lineString
-        if indexPath.row < self.customActionsDescription.count && self.customActionsDescription.contains(lineString) {
-            if self.customActionsImageName.count == self.customActionsDescription.count {
-                let imageName = self.customActionsImageName[self.customActionsDescription.index(of: lineString)!]
-                cell.imageView?.image = UIImage(named: imageName)
-            } else if self.customActionsImageName.count > 0 {
-                cell.imageView?.image = UIImage(named: self.customActionsImageName.first!)
+        if let lineString = self.suggestions[safe:indexPath.row] {
+            cell.textLabel!.text = lineString
+            //            if self.customActionsDescription.contains(lineString) {
+            //                if self.customActionsImageName.count == self.customActionsDescription.count {
+            //                    let imageName = self.customActionsImageName[self.customActionsDescription.index(of: lineString)!]
+            //                    cell.imageView?.image = UIImage(named: imageName)
+            //                } else if self.customActionsImageName.count > 0 {
+            //                    cell.imageView?.image = UIImage(named: self.customActionsImageName.first!)
+            //                }
+            //            } else if self.favoritesDescription.contains(lineString) {
+            //                if self.favoritesDescription.count == self.favoritesImageName.count {
+            //                    let imageName = self.favoritesImageName[self.favoritesDescription.index(of: lineString)!]
+            //                    cell.imageView?.image = UIImage(named: imageName)
+            //                } else if self.favoritesImageName.count > 0 {
+            //                    let imageName = self.favoritesImageName.first!
+            //                    cell.imageView?.image = UIImage(named: imageName)
+            //                }
+            //            } else if (lineString as NSString).substring(to: 2) == "H:" {
+            //                cell.textLabel!.text = (lineString as NSString).substring(from: 2)
+            //                if let historicalImageName = self.historicalImageName {
+            //                    cell.imageView?.image = UIImage(named: historicalImageName)
+            //                }
+            //            }
+            
+            //added
+            let imageNames = self.getSuggestionImageNames()
+            if let imageName = imageNames[lineString] {
+                cell.imageView?.image = UIImage(named:imageName)
             }
-        } else if indexPath.row >= self.customActionsDescription.count && indexPath.row < (self.customActionsDescription.count + self.favoritesDescription.count) && self.favoritesDescription.contains(lineString) {
-            if self.favoritesDescription.count == self.favoritesImageName.count {
-                let imageName = self.favoritesImageName[self.favoritesDescription.index(of: lineString)!]
-                cell.imageView?.image = UIImage(named: imageName)
-            } else if self.favoritesImageName.count > 0 {
-                let imageName = self.favoritesImageName.first!
-                cell.imageView?.image = UIImage(named: imageName)
+            if (lineString as NSString).length > 2,(lineString as NSString).substring(to: 2) == "H:" {
+                cell.textLabel!.text = (lineString as NSString).substring(from: 2)
+                if let historicalImageName = self.historicalImageName {
+                    cell.imageView?.image = UIImage(named: historicalImageName)
+                }
             }
-        } else if (lineString as NSString).substring(to: 2) == "H:" {
-            cell.textLabel!.text = (lineString as NSString).substring(from: 2)
-            if self.historicalImageName != nil {
-                cell.imageView?.image = UIImage(named: historicalImageName!)
-            }
+            //end
+            
         }
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.textField.resignFirstResponder()
-        if self.customActionsDescription.contains(self.suggestions[indexPath.row]) {
-            self.actionsDelegate?.didSelectCustomAction(autocomplete:self, index: self.customActionsDescription.index(of: self.suggestions[indexPath.row])!)
-            self.hideSuggestions()
-            tableView.deselectRow(at: indexPath, animated: true)
-            
-        } else {
-            self.textField.text = tableView.cellForRow(at: indexPath)?.textLabel!.text
-            if let data = self.dataDictionary.object(forKey: self.textField.text!) {
-                if data is Data {
-                    self.selectedData = NSKeyedUnarchiver.unarchiveObject(with: data as! Data)
-                } else {
-                    self.selectedData = data
-                }
+        if let lineString = self.suggestions[safe:indexPath.row] {
+            if self.customActionsDescription.contains(lineString) {
+                self.textField.resignFirstResponder()
+                tableView.deselectRow(at: indexPath, animated: true)
+                self.actionsDelegate?.didSelectCustomAction(autocomplete:self, index: self.customActionsDescription.index(of: lineString)!)
             } else {
-                self.selectedData = nil
+                self.textField.text = tableView.cellForRow(at: indexPath)?.textLabel!.text
+                //print("textfield text : \(self.textField.text)" ?? "textField's text is nill")
+                if let data = self.dataDictionary.object(forKey: self.textField.text!) {
+                    if data is Data {
+                        if #available(iOS 9.0, *) {
+                            do {
+                                self.selectedData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data as! NSData)
+                            } catch {
+                                self.selectedData = data
+                            }
+                        } else {
+                            self.selectedData = NSKeyedUnarchiver.unarchiveObject(with: data as! Data)
+                        }
+                    } else {
+                        self.selectedData = data
+                    }
+                } else {
+                    self.selectedData = nil
+                }
+                self.actionsDelegate?.didSelect(autocomplete:self, index:indexPath.row, suggestion: self.textField.text!, data: self.selectedData)
+                //you can add to search history here if needed :
+                //self.addToSearchHistory()
             }
-            self.actionsDelegate?.didSelect(autocomplete:self, suggestion: self.textField.text!, data: self.selectedData)
-            //you can add to search historical here if needed :
-            //self.addToSearchHistory(textField.text!)
         }
+        self.textField.resignFirstResponder()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -217,15 +271,20 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if self.cellHeight != nil {
+            return self.cellHeight!
+        }
         return self.bounds.size.height
     }
     
     
-// MARK: - textField delegate
+    // MARK: - textField delegate
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let str = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+        print(str)
         self.loadSuggestions(str)
+        //self.textFieldDelegate?.autocompleteTextFieldWillChange(autoComplete: self, textField: textField)
         return true
     }
     
@@ -244,66 +303,80 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        self.hideSuggestions()
+        print("blabla")
+        //self.hideSuggestions()
+        self.loadSuggestions("")
         return true
     }
     
     
-// MARK: - Historical methods
+    // MARK: - Historical methods
     
     //MARK: methods to implement in your project
-    func addToHistory(_ input:String, inputData:Any? = nil) {
+    func addToHistory(input:String? = nil, inputData:Any? = nil) {
+        self.setHistoryStoreFilesName()
+        let newInput = input ?? self.textField.text!
+        let newInputData = inputData ?? self.selectedData
         let directories = NSSearchPathForDirectoriesInDomains(.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-        let formatedInput = "H:" + input
+        let formatedInput = "H:" + newInput
         if let documents = directories.first {
             if let urlDocuments = NSURL(string: documents) {
-                let frequencyURL = urlDocuments.appendingPathComponent(AUTOCOMPLETE_HISTORY_FREQUENCY)
-                let dataURL = urlDocuments.appendingPathComponent(AUTOCOMPLETE_HISTORY_DATA)
-                let loadedfrequency = NSMutableDictionary(contentsOfFile: frequencyURL!.path)
-                let loadedData = NSMutableDictionary(contentsOfFile: dataURL!.path)
-                if let frequency = loadedfrequency {
-                    if let data = loadedData {
-                        if inputData != nil {
-                            data[input] = NSKeyedArchiver.archivedData(withRootObject: inputData!)
-                            self.writeData(data: data, dataURL: dataURL!)
-                        } else if self.selectedData != nil {
-                            data[input] = NSKeyedArchiver.archivedData(withRootObject: self.selectedData!)
-                            self.writeData(data: data, dataURL: dataURL!)
-                        }
-                        
-                    } else if inputData != nil {
-                        let data = NSDictionary(object: NSKeyedArchiver.archivedData(withRootObject: inputData!), forKey: input as NSCopying)
-                        self.writeData(data: data, dataURL: dataURL!)
-                    } else if self.selectedData != nil {
-                        let data = NSDictionary(object: NSKeyedArchiver.archivedData(withRootObject: self.selectedData!), forKey: input as NSCopying)
-                        self.writeData(data: data, dataURL: dataURL!)
+                //store suggestion
+                if let frequencyURL = urlDocuments.appendingPathComponent(AUTOCOMPLETE_HISTORY_FREQUENCY) {
+                    var frequency = NSMutableDictionary()
+                    if let loadedfrequency = NSMutableDictionary(contentsOfFile: frequencyURL.path) {
+                        frequency = loadedfrequency
                     }
-                    if let inputFrequency = frequency[input] as? NSNumber {
-                        frequency[formatedInput] = (inputFrequency as Int + 1) as NSNumber
+                    if let inputFrequency = frequency[newInput] as? NSNumber {
+                        frequency[formatedInput] = (inputFrequency as! Int + 1) as NSNumber
                         
                     } else {
                         frequency[formatedInput] = 1 as NSNumber
                     }
-                    self.writeData(data: frequency, dataURL: frequencyURL!)
-//                    if frequency.write(toFile: frequencyURL!.path, atomically: true) {
-//                        print("frequency stored with sucess")
-//                    } else {
-//                        print("error storing frequency")
-//                    }
-                } else {
-                    let frequency = NSDictionary(object: 1 as NSNumber, forKey: formatedInput as NSCopying)
-                    self.writeData(data: frequency, dataURL: frequencyURL!)
-                    if inputData != nil {
-                        let data = NSDictionary(object: NSKeyedArchiver.archivedData(withRootObject: inputData!), forKey: input as NSCopying)
-                        self.writeData(data: data, dataURL: dataURL!)
-                    }
+                    self.writeData(data: frequency, dataURL: frequencyURL)
                 }
-                UserDefaults.standard.set(("H:" + input), forKey: AUTOCOMPLETE_LAST_SEARCH)
+                //storeData
+                if let dataURL = urlDocuments.appendingPathComponent(AUTOCOMPLETE_HISTORY_DATA) {
+                    var data = NSMutableDictionary()
+                    if let loadedData = NSMutableDictionary(contentsOfFile: dataURL.path) {
+                        data = loadedData
+                        //print(data)
+                    }
+                    if let newData = newInputData {
+                        data[newInput] = NSKeyedArchiver.archivedData(withRootObject: newData)
+                    }
+                    self.writeData(data: data, dataURL: dataURL)
+                }
+                UserDefaults.standard.set(("H:" + newInput), forKey: AUTOCOMPLETE_LAST_SEARCH)
             }
         }
     }
     
+    func updateDataHistory(for suggestion:String, newData:Any) {
+        let directories = NSSearchPathForDirectoriesInDomains(.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+        if let documents = directories.first {
+            if let urlDocuments = NSURL(string: documents) {
+                let dataURL = urlDocuments.appendingPathComponent(AUTOCOMPLETE_HISTORY_DATA)
+                let loadedData = NSMutableDictionary(contentsOfFile: dataURL!.path)
+                if let data = loadedData {
+                    if (data.object(forKey: suggestion) != nil) {
+                        data.setValue(NSKeyedArchiver.archivedData(withRootObject:newData), forKey: suggestion)
+                        self.writeData(data: data, dataURL: dataURL!)
+                        return
+                    } else {
+                        print("newData")
+                        data.setValue(NSKeyedArchiver.archivedData(withRootObject:newData), forKey: suggestion)
+                        self.writeData(data: data, dataURL: dataURL!)
+                        return
+                    }
+                }
+            }
+        }
+        print("failed update data")
+    }
+    
     func removeHistory() {
+        self.setHistoryStoreFilesName()
         let fileManager = FileManager.default
         let directories = NSSearchPathForDirectoriesInDomains(.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
         if let documents = directories.first {
@@ -322,7 +395,7 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     }
     
     
-//MARK: internal methodes for historical
+    //MARK: internal methodes for historical
     
     private func writeData(data:NSDictionary, dataURL:URL) {
         if data.write(toFile: dataURL.path, atomically: true) {
@@ -330,18 +403,13 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
         } else {
             print("error storing data")
         }
+        let success = data.write(toFile: dataURL.path, atomically: true)
+        print(success ? "data stored with sucess":"error storing data")
     }
     
-//    private func writeFrequency(frequency:NSDictionary, frequencyURL:URL) {
-//        if frequency.write(toFile: frequencyURL.path, atomically: true) {
-//            print("frequency stored with sucess")
-//        } else {
-//            print("error storing frequency")
-//        }
-//    }
-    
     //new methodes
-    private func getHistory() -> (frequency:NSDictionary?, data:NSDictionary?) {
+    func getHistory() -> (frequency:NSDictionary?, data:NSDictionary?) {
+        self.setHistoryStoreFilesName()
         let directories = NSSearchPathForDirectoriesInDomains(.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
         if let documents = directories.first {
             if let urlDocuments = NSURL(string: documents) {
@@ -362,10 +430,13 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
         return (nil, nil)
     }
     
-    private func getSortedHistory() -> (suggestions:[String], dataDictionary:NSDictionary?) {
+    func getSortedHistory() -> (suggestions:[String], dataDictionary:NSDictionary?) {
         var suggestions:[String] = []
         var datas:NSDictionary? = NSMutableDictionary()
         let (frequency, data) = self.getHistory()
+        //test
+        //print("frequency dictionnaty\(String(describing: frequency?.count)) & data dictionary \(String(describing: data?.count))")
+        //end test
         if frequency != nil {
             let suggestionsArray = frequency!.keysSortedByValue(comparator: { (value1, value2) -> ComparisonResult in
                 return (value1 as! NSNumber).compare(value2 as! NSNumber)
@@ -376,6 +447,8 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
                     let normalLastInput = (lastInput as NSString).substring(from: 2)
                     if data != nil, let lastData = data!.object(forKey: normalLastInput) {
                         datas!.setValue(lastData, forKey: normalLastInput)
+                    } else {
+                        print("No data found stored for: \(normalLastInput)")
                     }
                 }
                 
@@ -386,8 +459,10 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
                         suggestions.append(stringValue)
                         if (stringValue as NSString).length > 3 {
                             let normalStringValue = (stringValue as NSString).substring(from: 2)
-                            if data != nil, let valueData = data?.object(forKey: normalStringValue) {
+                            if let valueData = data?.object(forKey: normalStringValue) {
                                 datas!.setValue(valueData, forKey: normalStringValue)
+                            } else {
+                                print("No data found stored for: \(normalStringValue)")
                             }
                         }
                     }
@@ -407,7 +482,7 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
         if self.withFavorite {
             for favorite in self.favoritesDescription {
                 self.suggestions.append(favorite)
-                if self.favoritesData != nil, let favoriteData = historyDatas!.object(forKey: favorite) {
+                if self.favoritesData != nil, let favoriteData = favoritesData!.object(forKey: favorite) {
                     self.dataDictionary.setValue(favoriteData, forKey: favorite)
                 } else if historyDatas != nil, let favoriteData = historyDatas!.object(forKey: favorite) {
                     self.dataDictionary.setValue(favoriteData, forKey: favorite)
@@ -428,7 +503,7 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     }
     
     private func loadStoredResults(input:String) {
-        if self.customActionsAreAllaysVisible {
+        if !self.customActionsAreAllaysVisible {
             self.suggestions = []
         } else {
             self.suggestions = self.customActionsDescription
@@ -438,13 +513,15 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
         let (history, historyDatas) = self.getSortedHistory()
         if self.withFavorite {
             for favorite in self.favoritesDescription {
-                let scaleFavorite = (favorite as NSString).substring(to: (input as NSString).length)
-                if (input.lowercased() == scaleFavorite.lowercased()) {
-                    self.suggestions.append(favorite)
-                    if self.favoritesData != nil, let favoriteData = historyDatas!.object(forKey: favorite) {
-                        self.dataDictionary.setValue(favoriteData, forKey: favorite)
-                    } else if historyDatas != nil, let favoriteData = historyDatas!.object(forKey: favorite) {
-                        self.dataDictionary.setValue(favoriteData, forKey: favorite)
+                if (favorite as NSString).length > (input as NSString).length {
+                    let scaleFavorite = (favorite as NSString).substring(to: (input as NSString).length)
+                    if (input.lowercased() == scaleFavorite.lowercased()) {
+                        self.suggestions.append(favorite)
+                        if self.favoritesData != nil, let favoriteData = favoritesData!.object(forKey: favorite) {
+                            self.dataDictionary.setValue(favoriteData, forKey: favorite)
+                        } else if historyDatas != nil, let favoriteData = historyDatas!.object(forKey: favorite) {
+                            self.dataDictionary.setValue(favoriteData, forKey: favorite)
+                        }
                     }
                 }
             }
@@ -456,8 +533,8 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
                     let scaleDescription = (normalDescription as NSString).substring(to: (input as NSString).length)
                     if (input.lowercased() == scaleDescription.lowercased()) {
                         self.suggestions.append(description)
-                        if historyDatas != nil, let data = historyDatas!.object(forKey: scaleDescription) {
-                            self.dataDictionary.setValue(data, forKey: scaleDescription)
+                        if historyDatas != nil, let data = historyDatas!.object(forKey: normalDescription) {
+                            self.dataDictionary.setValue(data, forKey: normalDescription)
                         }
                     }
                 }
@@ -466,12 +543,12 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     }
     
     private func addDataSourceSuggestions(suggestions:[String], data:NSDictionary?) {
-        for value in suggestions {
-            if !self.suggestions.contains(value) {
-                if !self.suggestions.contains(("H:" + value)) {
-                    self.suggestions.append(value as String)
-                    if data != nil {
-                        self.dataDictionary.setValue(data?.value(forKey: value), forKey: value)
+        for suggestion in suggestions {
+            if !self.suggestions.contains(suggestion) {
+                if !self.suggestions.contains(("H:" + suggestion)) {
+                    self.suggestions.append(suggestion as String)
+                    if let dictionary = data , let value = dictionary.object(forKey: suggestion){
+                        self.dataDictionary.setValue(value, forKey: suggestion)
                     }
                 }
             }
@@ -479,11 +556,14 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     }
     
     func loadSuggestions(_ input:String) {
-        if (input as NSString).length >= self.minCharactersforDataSource && self.dataSource != nil {
-            self.dataSource!.getSuggestions(autocomplete:self, input: input, completionHandler: { (suggestions, data) in
-                self.loadStoredResults(input: input)
-                self.addDataSourceSuggestions(suggestions: suggestions, data: data)
-                self.showSuggestions()
+        if (input as NSString).length >= self.minCharactersforDataSource, let dataSource = self.dataSource {
+            dataSource.getSuggestions(autocomplete:self, input: input, completionHandler: { (suggestions, data, suggestionImages) in
+                if self.textField.isEditing {
+                    self.suggestionImagesNames = suggestionImages
+                    self.loadStoredResults(input: input)
+                    self.addDataSourceSuggestions(suggestions: suggestions, data: data)
+                    self.showSuggestions()
+                }
             })
         } else if (input as NSString).length > 0 {
             self.loadStoredResults(input: input)
@@ -511,5 +591,13 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
         }
         return suggestions
     }
+    
+}
 
+extension Collection {
+    
+    /// Returns the element at the specified index iff it is within bounds, otherwise nil.
+    subscript (safe index: Index) -> Generator.Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
 }
