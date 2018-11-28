@@ -266,7 +266,7 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
                     if data is Data {
                         if #available(iOS 9.0, *) {
                             do {
-                                self.selectedData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data as! NSData)
+                                self.selectedData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData((data as! NSData) as Data)
                             } catch {
                                 self.selectedData = data
                             }

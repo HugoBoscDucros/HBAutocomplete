@@ -12,24 +12,11 @@
 		8CE700211E126A09008086A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CE7001F1E126A09008086A4 /* Main.storyboard */; };
 		8CE700231E126A09008086A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CE700221E126A09008086A4 /* Assets.xcassets */; };
 		8CE700261E126A09008086A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CE700241E126A09008086A4 /* LaunchScreen.storyboard */; };
-		8CE700311E126A09008086A4 /* AutocompleteTestProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE700301E126A09008086A4 /* AutocompleteTestProjectTests.swift */; };
 		8CE700401E127954008086A4 /* GoogleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE7003F1E127954008086A4 /* GoogleAPI.swift */; };
-		8CE700411E127954008086A4 /* GoogleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE7003F1E127954008086A4 /* GoogleAPI.swift */; };
 		8CE700441E127A76008086A4 /* PRestAPICallMAnager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE700431E127A76008086A4 /* PRestAPICallMAnager.swift */; };
-		8CE700451E127A76008086A4 /* PRestAPICallMAnager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE700431E127A76008086A4 /* PRestAPICallMAnager.swift */; };
 		8CE700491E15431B008086A4 /* AddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE700481E15431B008086A4 /* AddressViewController.swift */; };
 		8CE7004B1E154437008086A4 /* HerosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE7004A1E154437008086A4 /* HerosViewController.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		8CE7002D1E126A09008086A4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8CE700101E126A09008086A4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8CE700171E126A09008086A4;
-			remoteInfo = AutocompleteTestProject;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		8CE311C21E1BB36400560F88 /* HBAutocompleteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HBAutocompleteView.swift; path = ../HBAutocompleteView.swift; sourceTree = "<group>"; };
@@ -39,9 +26,6 @@
 		8CE700221E126A09008086A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8CE700251E126A09008086A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8CE700271E126A09008086A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8CE7002C1E126A09008086A4 /* AutocompleteTestProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AutocompleteTestProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		8CE700301E126A09008086A4 /* AutocompleteTestProjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteTestProjectTests.swift; sourceTree = "<group>"; };
-		8CE700321E126A09008086A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8CE7003F1E127954008086A4 /* GoogleAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleAPI.swift; sourceTree = "<group>"; };
 		8CE700431E127A76008086A4 /* PRestAPICallMAnager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PRestAPICallMAnager.swift; sourceTree = "<group>"; };
 		8CE700481E15431B008086A4 /* AddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressViewController.swift; sourceTree = "<group>"; };
@@ -56,13 +40,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8CE700291E126A09008086A4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -70,7 +47,6 @@
 			isa = PBXGroup;
 			children = (
 				8CE7001A1E126A09008086A4 /* AutocompleteTestProject */,
-				8CE7002F1E126A09008086A4 /* AutocompleteTestProjectTests */,
 				8CE700191E126A09008086A4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -79,7 +55,6 @@
 			isa = PBXGroup;
 			children = (
 				8CE700181E126A09008086A4 /* AutocompleteTestProject.app */,
-				8CE7002C1E126A09008086A4 /* AutocompleteTestProjectTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -98,15 +73,6 @@
 				8CE700421E127A0E008086A4 /* Helpers */,
 			);
 			path = AutocompleteTestProject;
-			sourceTree = "<group>";
-		};
-		8CE7002F1E126A09008086A4 /* AutocompleteTestProjectTests */ = {
-			isa = PBXGroup;
-			children = (
-				8CE700301E126A09008086A4 /* AutocompleteTestProjectTests.swift */,
-				8CE700321E126A09008086A4 /* Info.plist */,
-			);
-			path = AutocompleteTestProjectTests;
 			sourceTree = "<group>";
 		};
 		8CE7003E1E12790C008086A4 /* HBAutocomplete */ = {
@@ -146,24 +112,6 @@
 			productReference = 8CE700181E126A09008086A4 /* AutocompleteTestProject.app */;
 			productType = "com.apple.product-type.application";
 		};
-		8CE7002B1E126A09008086A4 /* AutocompleteTestProjectTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 8CE700381E126A09008086A4 /* Build configuration list for PBXNativeTarget "AutocompleteTestProjectTests" */;
-			buildPhases = (
-				8CE700281E126A09008086A4 /* Sources */,
-				8CE700291E126A09008086A4 /* Frameworks */,
-				8CE7002A1E126A09008086A4 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				8CE7002E1E126A09008086A4 /* PBXTargetDependency */,
-			);
-			name = AutocompleteTestProjectTests;
-			productName = AutocompleteTestProjectTests;
-			productReference = 8CE7002C1E126A09008086A4 /* AutocompleteTestProjectTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -177,13 +125,8 @@
 					8CE700171E126A09008086A4 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = HVV6EGKC28;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
-					};
-					8CE7002B1E126A09008086A4 = {
-						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = HVV6EGKC28;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 8CE700171E126A09008086A4;
 					};
 				};
 			};
@@ -201,7 +144,6 @@
 			projectRoot = "";
 			targets = (
 				8CE700171E126A09008086A4 /* AutocompleteTestProject */,
-				8CE7002B1E126A09008086A4 /* AutocompleteTestProjectTests */,
 			);
 		};
 /* End PBXProject section */
@@ -214,13 +156,6 @@
 				8CE700261E126A09008086A4 /* LaunchScreen.storyboard in Resources */,
 				8CE700231E126A09008086A4 /* Assets.xcassets in Resources */,
 				8CE700211E126A09008086A4 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8CE7002A1E126A09008086A4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,25 +175,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8CE700281E126A09008086A4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8CE700411E127954008086A4 /* GoogleAPI.swift in Sources */,
-				8CE700311E126A09008086A4 /* AutocompleteTestProjectTests.swift in Sources */,
-				8CE700451E127A76008086A4 /* PRestAPICallMAnager.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		8CE7002E1E126A09008086A4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8CE700171E126A09008086A4 /* AutocompleteTestProject */;
-			targetProxy = 8CE7002D1E126A09008086A4 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		8CE7001F1E126A09008086A4 /* Main.storyboard */ = {
@@ -334,6 +251,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -384,6 +302,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -398,7 +317,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "S-H.AutocompleteTestProject";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -411,37 +331,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "S-H.AutocompleteTestProject";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
-		8CE700391E126A09008086A4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = HVV6EGKC28;
-				INFOPLIST_FILE = AutocompleteTestProjectTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "S-H.AutocompleteTestProjectTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AutocompleteTestProject.app/AutocompleteTestProject";
-			};
-			name = Debug;
-		};
-		8CE7003A1E126A09008086A4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = HVV6EGKC28;
-				INFOPLIST_FILE = AutocompleteTestProjectTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "S-H.AutocompleteTestProjectTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AutocompleteTestProject.app/AutocompleteTestProject";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -462,15 +353,6 @@
 			buildConfigurations = (
 				8CE700361E126A09008086A4 /* Debug */,
 				8CE700371E126A09008086A4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		8CE700381E126A09008086A4 /* Build configuration list for PBXNativeTarget "AutocompleteTestProjectTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8CE700391E126A09008086A4 /* Debug */,
-				8CE7003A1E126A09008086A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

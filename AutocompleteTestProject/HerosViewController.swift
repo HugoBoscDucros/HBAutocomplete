@@ -71,6 +71,10 @@ class HerosViewController: UIViewController, HBAutocompleteDataSource {
     func getSuggestions(autocomplete: HBAutocompleteView, input: String, completionHandler: @escaping ([String], NSDictionary?, [String : String]?) -> Void) {
         completionHandler(self.heroList, nil, nil)
     }
+    
+    func flteredList(for input:String) {
+        
+    }
 
     /*
     // MARK: - Navigation
