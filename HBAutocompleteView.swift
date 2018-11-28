@@ -53,7 +53,7 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     //optional features
     var withFavorite:Bool = false
     //var withCustomActions:Bool = false
-    var tableViewIsReproducingViewStyle = false
+    var tableViewIsReproducingViewStyle = true
     var customActionsAreAllaysVisible = false
     
     //internal variables
@@ -191,7 +191,7 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
         self.tableView.delegate = self
         //
         self.tableView.reloadData()
-        if !tableViewIsExternal, self.tableView.isEditing {
+        if !tableViewIsExternal && (self.textField?.isEditing ?? false || self.searchBar?.isFirstResponder ?? false) {
             var x = self.frame.origin.x
             var y = self.frame.origin.y + self.frame.size.height
             let width = self.frame.width
@@ -266,7 +266,7 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
                     if data is Data {
                         if #available(iOS 9.0, *) {
                             do {
-                                self.selectedData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data as! Data)
+                                self.selectedData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data as! NSData)
                             } catch {
                                 self.selectedData = data
                             }
@@ -362,7 +362,7 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     //MARK: methods to implement in your project
     func addToHistory(input:String? = nil, inputData:Any? = nil) {
         self.setHistoryStoreFilesName()
-        let newInput = input ?? self.textField.text!
+        let newInput = input ?? self.textField?.text ?? searchBar!.text!
         let newInputData = inputData ?? self.selectedData
         let directories = NSSearchPathForDirectoriesInDomains(.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
         let formatedInput = "H:" + newInput
@@ -605,7 +605,7 @@ class HBAutocompleteView: UIView, UITextFieldDelegate, UITableViewDataSource, UI
     func loadSuggestions(_ input:String) {
         if (input as NSString).length >= self.minCharactersforDataSource, let dataSource = self.dataSource {
             dataSource.getSuggestions(autocomplete:self, input: input, completionHandler: { (suggestions, data, suggestionImages) in
-                if self.textField.isEditing {
+                if self.textField?.isEditing ?? false || self.searchBar?.isFirstResponder ?? false {
                     self.suggestionImagesNames = suggestionImages
                     self.loadStoredResults(input: input)
                     self.addDataSourceSuggestions(suggestions: suggestions, data: data)

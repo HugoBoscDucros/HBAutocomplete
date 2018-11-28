@@ -14,6 +14,7 @@ let GOOGLE_PLACE_DEFAULT_LOCATION = "48.8567,2.3508"
 
 class AddressViewController: UIViewController, HBAutocompleteDataSource, HBAutoCompleteActionsDelegate {
     
+    
     @IBOutlet weak var autocomplete: HBAutocompleteView!
     
     @IBOutlet weak var addToHistoryButton: UIButton!
@@ -51,7 +52,6 @@ class AddressViewController: UIViewController, HBAutocompleteDataSource, HBAutoC
         self.autocomplete.minCharactersforDataSource = 2
         self.autocomplete.historicalImageName = "SearchHistory"
         self.autocomplete.actionsDelegate = self
-        self.autocomplete.withCustomActions = true
         self.autocomplete.customActionsDescription = ["Current location"]
         self.autocomplete.customActionsImageName = ["CurrentLocation"]
     }
@@ -60,37 +60,36 @@ class AddressViewController: UIViewController, HBAutocompleteDataSource, HBAutoC
 //MARK: - Actions
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.autocomplete.textField.resignFirstResponder()
+        self.autocomplete.textField?.resignFirstResponder()
     }
     
     @IBAction func addToHistoryButtonTapped(_ sender: Any) {
-        if self.autocomplete.textField.text != nil && self.autocomplete.textField.text != "" {
-            //self.autocomplete.addToSearchHistory(self.autocomplete.textField.text!)
-            self.autocomplete.addToHistory(self.autocomplete.textField.text!)//, inputData: self.autocomplete.selectedData)
+        if let text = self.autocomplete.textField?.text, text != "" {
+            self.autocomplete.addToHistory(input: self.autocomplete.textField!.text!)
         }
     }
 
     
 //MARK: - HBAutocomplete dataSource (required)
     
-    func getSuggestions(autocomplete: HBAutocompleteView, input: String, completionHandler: @escaping ([String], NSDictionary?) -> Void) {
+    func getSuggestions(autocomplete: HBAutocompleteView, input: String, completionHandler: @escaping ([String], NSDictionary?, [String : String]?) -> Void) {
         GoogleAPI.AutocompleteSuggestionsFromDefaultLocation(input) { (suggestions, places) in
-            completionHandler(suggestions, places)
+            completionHandler(suggestions, places, nil)
         }
     }
     
     
 //MARK: - HBAutocomplete actions delegate
     
-    func didSelectCustomAction(autocomplete: HBAutocompleteView, index: Int) {
-        if index == 0 {
-            self.autocomplete.textField.text = "success"
+    func didSelect(autocomplete: HBAutocompleteView, index: Int, suggestion: String, data: Any?) {
+        if let place = data as? Place {
+            print(place.placeId)
         }
     }
     
-    func didSelect(autocomplete: HBAutocompleteView, suggestion: String, data: Any?) {
-        if let place = data as? Place {
-            print(place.placeId)
+    func didSelectCustomAction(autocomplete: HBAutocompleteView, index: Int) {
+        if index == 0 {
+            self.autocomplete.textField?.text = "success"
         }
     }
     

@@ -58,14 +58,18 @@ class HerosViewController: UIViewController, HBAutocompleteDataSource {
 //MARK: - Actions
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.autocomplete.textField.resignFirstResponder()
+        self.autocomplete.textField?.resignFirstResponder()
     }
     
     
 //MARK: - HBAutocomplete dataSource
     
-    func getSuggestions(autocomplete: HBAutocompleteView, input: String, completionHandler: @escaping ([String], NSDictionary?) -> Void) {
-        completionHandler(self.heroList, nil)
+//    func getSuggestions(autocomplete: HBAutocompleteView, input: String, completionHandler: @escaping ([String], NSDictionary?) -> Void) {
+//        completionHandler(self.heroList, nil)
+//    }
+    
+    func getSuggestions(autocomplete: HBAutocompleteView, input: String, completionHandler: @escaping ([String], NSDictionary?, [String : String]?) -> Void) {
+        completionHandler(self.heroList, nil, nil)
     }
 
     /*
