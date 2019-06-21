@@ -22,11 +22,6 @@ public protocol HBAutoCompleteTableViewDelegate:class {
     func tableViewDidHide(autocomplete:HBAutocomplete, tableView:UITableView)
 }
 
-//public protocol HBAutocompleteTextFieldDelegate:class {
-//    func autocompleteTextFieldDidBeginEditing(autocomplete:HBAutocomplete, textField:UITextField)
-//    func autocompleteTextFieldDidEndEditing(autocomplete:HBAutocomplete, textField:UITextField)
-//}
-
 public protocol HBAutocompleteStore {
     func getHistory() -> (suggestions:[String], dataDictionary:[String:Any]?)
     func updateDataHistory(for suggestion:String, newData:Any)
@@ -196,22 +191,6 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
             self.tableViewDelegate?.tableViewDidShow(autocomplete: self, tableView: tableView)
         }
     }
-
-    
-//    private func showSuggestions() {
-//        //self.tableView.reloadData()
-//        if !self.tableViewIsExternal {
-//            let templateView = self.templateView ?? textField.view
-//            if var (hyperView, origin) = self.getHyperViewAndOrigin(from: templateView) {
-//                var size = templateView.frame.size
-//                size.height *= CGFloat(min(self.suggestions.count, self.maxVisibleRow))
-//                origin.y += templateView.frame.height
-//                self.tableView.frame = CGRect(origin: origin, size: size)
-//                hyperView.addSubview(self.tableView)
-//                self.tableViewDelegate?.tableViewDidShow(autocomplete: self, tableView: tableView)
-//            }
-//        }
-//    }
     
     private func hideTableViewIfNeeded() {
         if !self.tableViewIsExternal {
@@ -303,7 +282,6 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     
     public func textFieldDidBeginEditing(_ textField: UITextField) {
         self.textFieldDelegate?.textFieldDidBeginEditing?(textField)
-        //self.loadSuggestions(textField.text!)
         self.showTableViewIfNeeded()
         
     }
@@ -323,7 +301,6 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     
     public func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         self.searchBarDelegate?.searchBarTextDidBeginEditing?(searchBar)
-        //self.loadSuggestions(searchBar.text!)
         self.showTableViewIfNeeded()
     }
     
@@ -358,37 +335,6 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     
     //MARK: internal methodes for historical
     
-    //new methodes
-//    func getHistory() -> (suggestions:[String], dataDictionary:[String:Any]?) {
-//        return self.store?.getHistory() ?? ([String](),nil)
-//    }
-    
-//    private func loadStoredSuggestions() {
-//        var newSuggestion = self.customActionsDescription
-//        //self.suggestions = self.customActionsDescription
-//        self.dataDictionary = [String:Any]()
-//        let (history, historyDatas) = self.store?.getHistory() ?? ([String](), nil)
-//        if self.withFavorite {
-//            for favorite in self.favoritesDescription {
-//                newSuggestion.append(favorite)
-//                if self.favoritesData != nil, let favoriteData = favoritesData?[favorite] {
-//                    self.dataDictionary[favorite] = favoriteData
-//                } else if historyDatas != nil, let favoriteData = historyDatas?[favorite] {
-//                    self.dataDictionary[favorite] = favoriteData
-//                }
-//            }
-//        }
-//        for description in history {
-//            if !newSuggestion.contains(description){
-//                newSuggestion.append(description)
-//                if historyDatas != nil, let data = historyDatas?[description] {
-//                    self.dataDictionary[description] = data
-//                }
-//            }
-//        }
-//        self.suggestions = newSuggestion
-//    }
-    
     private func loadStoredResults(input:String) -> ([String], [String:Any]) {
         var suggestion = [String]()
         var datas = [String:Any]()
@@ -408,41 +354,8 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
             datas.merge(self.favoritesData?.filter({$0.key.lowercased().contains(input.lowercased())}) ?? [String:Any]()){ (_,new) in new}
             datas.merge(historyDatas?.filter({$0.key.lowercased().contains(input.lowercased())}) ?? [String:Any]()){ (_,new) in new}
         }
-//        if self.withFavorite {
-//
-//            for favorite in self.favoritesDescription {
-//
-//                if favorite.lowercased().contains(input.lowercased()) {
-//                    suggestion.append(favorite)
-//                    if self.favoritesData != nil, let favoriteData = favoritesData?[favorite] {
-//                        datas[favorite] = favoriteData
-//                    } else if historyDatas != nil, let favoriteData = historyDatas?[favorite] {
-//                        datas[favorite] = favoriteData
-//                    }
-//                }
-//            }
-//        }
-//        for description in history {
-//            if description.lowercased().contains(input.lowercased()) {
-//                suggestion.append(description)
-//                if historyDatas != nil, let data = historyDatas?[description] {
-//                    datas[description] = data
-//                }
-//            }
-//        }
         return (suggestion,datas)
     }
-    
-//    private func addDataSourceSuggestions(suggestions:[String], data:[String:Any]?) {
-//        for suggestion in suggestions {
-//            if !self.suggestions.contains(suggestion) {
-//                self.suggestions.append(suggestion as String)
-//                if let dictionary = data , let value = dictionary[suggestion] {
-//                    self.dataDictionary[suggestion] = value
-//                }
-//            }
-//        }
-//    }
     
     private func update(_ suggestions:[String], data:[String:Any]) {
         self.dataDictionary = data
@@ -453,29 +366,20 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
         let input = newInput ?? self.textField.text ?? ""
         if input.count >= self.minCharactersforDataSource, let dataSource = self.dataSource {
             dataSource.getSuggestions(autocomplete:self, input: input, completionHandler: { (suggestions, data, suggestionImages) in
-                //if self.textField.isEditing {
-                    self.suggestionImages = suggestionImages
-                    var (newSuggestion,storedDatas) = self.loadStoredResults(input: input)
-                    for suggestion in suggestions {
-                        if !newSuggestion.map({$0.lowercased()}).contains(suggestion.lowercased()) {
-                            newSuggestion.append(suggestion)
-                        }
+                self.suggestionImages = suggestionImages
+                var (newSuggestion,storedDatas) = self.loadStoredResults(input: input)
+                for suggestion in suggestions {
+                    if !newSuggestion.map({$0.lowercased()}).contains(suggestion.lowercased()) {
+                        newSuggestion.append(suggestion)
                     }
-                    //newSuggestion.append(contentsOf: suggestions)
-                    let newDatas = storedDatas.merging(data ?? [String:Any]()){ (_,new) in new}
-                    self.update(newSuggestion, data: newDatas)
-                    //self.addDataSourceSuggestions(suggestions: suggestions, data: data)
-                    //self.showSuggestions()
-                //}
+                }
+                let newDatas = storedDatas.merging(data ?? [String:Any]()){ (_,new) in new}
+                self.update(newSuggestion, data: newDatas)
             })
-        } else /*if input.count > 0*//*, self.textField.isEditing*/ {
+        } else  {
             let (suggestions, datas) = self.loadStoredResults(input: input)
             self.update(suggestions, data: datas)
-            //self.showSuggestions()
-        }// else /*if self.textField.isEditing */{
-            //self.loadStoredSuggestions()
-            //self.showSuggestions()
-        //}
+        }
     }
     
     
