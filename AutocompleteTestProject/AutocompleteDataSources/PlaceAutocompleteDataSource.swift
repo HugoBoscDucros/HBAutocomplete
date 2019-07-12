@@ -1,8 +1,8 @@
 //
-//  PlaceAutocompleteDataSource.swift
+//  AddressAutocompleteDataSource.swift
 //  AutocompleteTestProject
 //
-//  Created by Hugo Bosc-Ducros on 20/06/2019.
+//  Created by Hugo Bosc-Ducros on 24/06/2019.
 //  Copyright © 2019 Hugo Bosc-Ducros. All rights reserved.
 //
 
@@ -10,38 +10,29 @@ import Foundation
 import HBAutoComplete
 import MapKit
 
-class PlaceAutocompleteDataSource:NSObject,HBAutocompleteDataSource, MKLocalSearchCompleterDelegate {
-    
-    let requestCompleter = MKLocalSearchCompleter()
-    
-    override init() {
-        super.init()
-        self.requestCompleter.delegate = self
-    }
-    
-    var completion:(([String])-> ())?
+class PlaceAutocompleteDataSource: HBAutocompleteDataSource {
     
     
     func getSuggestions(autocomplete: HBAutocomplete, input: String, completionHandler: @escaping ([String], [String : Any]?, [String : UIImage]?) -> Void) {
-        self.serachRequest(input) { addresses in
-            completionHandler(addresses,nil,nil)
+        let searchRequest = MKLocalSearch.Request()
+        searchRequest.naturalLanguageQuery = input
+        let search = MKLocalSearch(request: searchRequest)
+        search.start { response, error in
+            guard let response = response else {
+                print("Error: \(error?.localizedDescription ?? "Unknown error").")
+                completionHandler([String](),nil,nil)
+                return
+            }
+            var suggestions = [String]()
+            var mapItemDictionary = [String:MKMapItem]()
+            for item in response.mapItems {
+                if let name = item.name {
+                    mapItemDictionary[name] = item
+                    suggestions.append(name)
+                }
+            }
+            completionHandler(suggestions,mapItemDictionary,nil)
         }
-    }
-    
-    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
-        let addressList = completer.results.map({$0.title})
-        self.completion?(addressList)
-        self.completion = nil
-    }
-    
-    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
-        self.completion?([String]())
-        self.completion = nil
-    }
-    
-    private func serachRequest(_ input:String, completion: @escaping ([String])-> ()) {
-        self.completion = completion
-        requestCompleter.queryFragment = input
     }
     
     

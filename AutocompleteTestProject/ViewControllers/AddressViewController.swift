@@ -22,7 +22,7 @@ class AddressViewController: UIViewController, /*HBAutocompleteDataSource,*/ HBA
     @IBOutlet weak var addToHistoryButton: UIButton!
     
     var autocomplete:HBAutocomplete!
-    var dataSource = PlaceAutocompleteDataSource()
+    var dataSource = AddressAutocompleteDataSource()
 
 //MARK: - viewController life cycle
 

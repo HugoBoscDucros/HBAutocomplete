@@ -79,7 +79,7 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     }
     
     var dataDictionary = [String:Any]()
-    var selectedData:Any?
+    public var selectedData:Any?
     var suggestions:[String] = [] {
         didSet {
             self.tableView.reloadData()
