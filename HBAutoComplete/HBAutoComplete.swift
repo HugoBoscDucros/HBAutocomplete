@@ -314,6 +314,10 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
         self.loadSuggestions(searchText)
     }
     
+    public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.searchBarDelegate?.searchBarSearchButtonClicked?(searchBar)
+    }
+    
     
     // MARK: - Historical methods
     

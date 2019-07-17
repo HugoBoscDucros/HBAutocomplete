@@ -12,7 +12,7 @@ import MapKit
 
 class PlaceAutocompleteDataSource: HBAutocompleteDataSource {
     
-    
+
     func getSuggestions(autocomplete: HBAutocomplete, input: String, completionHandler: @escaping ([String], [String : Any]?, [String : UIImage]?) -> Void) {
         let searchRequest = MKLocalSearch.Request()
         searchRequest.naturalLanguageQuery = input
