@@ -55,6 +55,8 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     public var minCharactersforDataSource:Int = 1
     public var cellFont:UIFont?
     public var cellHeight:CGFloat?
+    public var cellBackgroundColor:UIColor?
+    public var suggestionTextColor:UIColor?
     //optional features
     public var withFavorite:Bool = false
     //var withCustomActions:Bool = false
@@ -70,6 +72,7 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     public weak var tableViewDelegate:HBAutoCompleteTableViewDelegate?
     public weak var textFieldDelegate:UITextFieldDelegate?
     public weak var searchBarDelegate:UISearchBarDelegate?
+    
     
     //historyStoreDelegate
     public var store:HBAutocompleteStore? {
@@ -216,7 +219,10 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.textLabel?.font = (self.cellFont == nil) ? self.textField.font:self.cellFont!
-        cell.textLabel?.textColor = .black
+        cell.textLabel?.textColor = self.suggestionTextColor ?? .black
+        if let color = self.cellBackgroundColor {
+            cell.backgroundColor = color
+        }
         //print("cell as textLabel : \((cell.textLabel != nil) ? "yes":"no")")
         if let lineString = self.suggestions[safe:indexPath.row] {
             cell.textLabel!.text = lineString
