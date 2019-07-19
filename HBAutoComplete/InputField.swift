@@ -60,6 +60,11 @@ class InputField:NSObject, UISearchBarDelegate {
         self.searchBar?.resignFirstResponder()
     }
     
+    func becomeFirstResponder() {
+        self.textField?.becomeFirstResponder()
+        self.searchBar?.becomeFirstResponder()
+    }
+    
     
     //MARK: - SearchBarDelegate
     

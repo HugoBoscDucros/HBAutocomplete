@@ -168,6 +168,10 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
         return images
     }
     
+    public func becomeFirstResponder() {
+        self.textField.becomeFirstResponder()
+    }
+    
     
     // MARK: - Show/Hide tableView suggestions
     
