@@ -60,6 +60,11 @@ class InputField:NSObject, UISearchBarDelegate {
         self.searchBar?.resignFirstResponder()
     }
     
+    func becomeFirstResponder() {
+        self.textField?.becomeFirstResponder()
+        self.searchBar?.becomeFirstResponder()
+    }
+    
     
     //MARK: - SearchBarDelegate
     
@@ -75,5 +80,9 @@ class InputField:NSObject, UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.delegate?.searchBar?(searchBar, textDidChange: searchText)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.delegate?.searchBarSearchButtonClicked?(searchBar)
     }
 }

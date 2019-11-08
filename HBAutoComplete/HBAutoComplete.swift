@@ -55,6 +55,8 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     public var minCharactersforDataSource:Int = 1
     public var cellFont:UIFont?
     public var cellHeight:CGFloat?
+    public var cellBackgroundColor:UIColor?
+    public var suggestionTextColor:UIColor?
     //optional features
     public var withFavorite:Bool = false
     //var withCustomActions:Bool = false
@@ -70,6 +72,7 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     public weak var tableViewDelegate:HBAutoCompleteTableViewDelegate?
     public weak var textFieldDelegate:UITextFieldDelegate?
     public weak var searchBarDelegate:UISearchBarDelegate?
+    
     
     //historyStoreDelegate
     public var store:HBAutocompleteStore? {
@@ -91,6 +94,7 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     weak var templateView:UIView?
     
     private var tableView:UITableView {
+        print("tableView is \(externalTableView != nil ? "external":"internal")")
         return externalTableView ?? internalTableView
     }
     private lazy var internalTableView = UITableView()
@@ -165,6 +169,10 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
         return images
     }
     
+    public func becomeFirstResponder() {
+        self.textField.becomeFirstResponder()
+    }
+    
     
     // MARK: - Show/Hide tableView suggestions
     
@@ -216,7 +224,10 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.textLabel?.font = (self.cellFont == nil) ? self.textField.font:self.cellFont!
-        cell.textLabel?.textColor = .black
+        cell.textLabel?.textColor = self.suggestionTextColor ?? .black
+        if let color = self.cellBackgroundColor {
+            cell.backgroundColor = color
+        }
         //print("cell as textLabel : \((cell.textLabel != nil) ? "yes":"no")")
         if let lineString = self.suggestions[safe:indexPath.row] {
             cell.textLabel!.text = lineString
@@ -312,6 +323,10 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.searchBarDelegate?.searchBar?(searchBar, textDidChange: searchText)
         self.loadSuggestions(searchText)
+    }
+    
+    public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.searchBarDelegate?.searchBarSearchButtonClicked?(searchBar)
     }
     
     
