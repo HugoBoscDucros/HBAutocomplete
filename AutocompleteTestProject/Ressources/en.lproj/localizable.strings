@@ -1,0 +1,14 @@
+/* 
+  File.strings
+  AutocompleteTestProject
+
+  Created by Hugo Bosc-Ducros on 08/11/2019.
+  Copyright © 2019 Hugo Bosc-Ducros. All rights reserved.
+*/
+
+"Batman" = ;
+"Catwoman" = "Catwoman";
+"Flash" = "Flash";
+"Spiderman" = "Spiderman";
+"Superman" = "Superman";
+"Zoro" = "Zoro";
