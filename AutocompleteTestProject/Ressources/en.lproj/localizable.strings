@@ -6,7 +6,7 @@
   Copyright © 2019 Hugo Bosc-Ducros. All rights reserved.
 */
 
-"Batman" = ;
+"Batman" = "Batman;
 "Catwoman" = "Catwoman";
 "Flash" = "Flash";
 "Spiderman" = "Spiderman";
