@@ -12,9 +12,9 @@ typealias InputFieldDelegate = UITextFieldDelegate & UISearchBarDelegate
 
 class InputField:NSObject, UISearchBarDelegate {
     
-    private unowned var textField:UITextField?
+    private unowned var textField: UITextField?
     private unowned var searchBar: UISearchBar?
-    private var searchBarIsEditing:Bool = false
+    private var searchBarIsEditing: Bool = false
     
     weak var delegate:InputFieldDelegate? {
         didSet {
@@ -52,7 +52,14 @@ class InputField:NSObject, UISearchBarDelegate {
     }
     
     var font:UIFont? {
-         return (textField ?? searchBar!.subviews.first!.subviews.first(where: {$0 is UITextField}) as! UITextField).font
+//        if let textField = self.textField {
+//            return textField.font
+//        } else if let searchBar = self.searchBar {
+//            return searchBar.searchTextField.font
+//        } else {
+//            return nil
+//        }
+        return UIFont.systemFont(ofSize: 17)
     }
     
     func resignFirstResponder() {
