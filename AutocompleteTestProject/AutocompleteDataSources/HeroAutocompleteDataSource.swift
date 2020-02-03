@@ -11,7 +11,7 @@ import HBAutoComplete
 
 class HeroAutocompleteDataSource:HBAutocompleteDataSource {
     
-    var heroList:[String] = ["Batman","Catwoman", "Flash", "Spiderman", "Superman", "Zoro" ]
+    var heroList:[String] = [BATMAN,CATWOMAN, FLASH, SPIDERMAN, SUPERMAN, ZORO]
     
     func getSuggestions(autocomplete: HBAutocomplete, input: String, completionHandler: @escaping ([String], [String : Any]?, [String : UIImage]?) -> Void) {
         completionHandler(self.filteredList(for: input), nil, nil)

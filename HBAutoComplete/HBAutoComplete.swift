@@ -94,6 +94,7 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     weak var templateView:UIView?
     
     private var tableView:UITableView {
+        print("tableView is \(externalTableView != nil ? "external":"internal")")
         return externalTableView ?? internalTableView
     }
     private lazy var internalTableView = UITableView()
