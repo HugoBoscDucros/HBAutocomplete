@@ -78,6 +78,7 @@
 		A5D2A67522BCB8E600F6229A /* SearchAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAddressViewController.swift; sourceTree = "<group>"; };
 		A5FF06B622C094C6003903C5 /* PlaceAutocompleteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAutocompleteDataSource.swift; sourceTree = "<group>"; };
 		A5FF06B822C09C82003903C5 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		D7A2925A23EC32AB0032353D /* HBAutocomplete */ = {isa = PBXFileReference; lastKnownFileType = folder; name = HBAutocomplete; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +105,7 @@
 		8CE7000F1E126A09008086A4 = {
 			isa = PBXGroup;
 			children = (
+				D7A2925A23EC32AB0032353D /* HBAutocomplete */,
 				A54C99B923EC1BF00036CDA9 /* HBAutoComplete.podspec */,
 				8CE7001A1E126A09008086A4 /* AutocompleteTestProject */,
 				A5CB0CF122B0503400260BE5 /* HBAutoComplete */,
@@ -643,7 +645,7 @@
 /* Begin XCRemoteSwiftPackageReference section */
 		A55B845423EC30BE009AAFBE /* XCRemoteSwiftPackageReference "HBAutocomplete" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "../HBAutocomplete";
+			repositoryURL = ../HBAutocomplete;
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;

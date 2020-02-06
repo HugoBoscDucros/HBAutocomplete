@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+//TEST
+
 public protocol HBAutocompleteDataSource:class {
     func getSuggestions(autocomplete:HBAutocomplete, input:String, completionHandler:@escaping(_ suggestions:[String], _ data:[String:Any]?, _ suggestionImages:[String:UIImage]?) -> Void)
 }
