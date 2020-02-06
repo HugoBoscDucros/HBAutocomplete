@@ -62,7 +62,6 @@
 		8CE7004A1E154437008086A4 /* HerosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HerosViewController.swift; sourceTree = "<group>"; };
 		A51A57C122BB738E004DB0C3 /* AutocompleteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteStore.swift; sourceTree = "<group>"; };
 		A54C99B923EC1BF00036CDA9 /* HBAutoComplete.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HBAutoComplete.podspec; sourceTree = "<group>"; };
-		A54C99C023EC1C840036CDA9 /* HBAutocomplete */ = {isa = PBXFileReference; lastKnownFileType = folder; name = HBAutocomplete; sourceTree = "<group>"; };
 		A563A1FE2375D09000114194 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A563A1FF2375D09000114194 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A563A2012375D09E00114194 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/localizable.strings; sourceTree = "<group>"; };
@@ -76,6 +75,7 @@
 		A5D2A66C22BB7B0700F6229A /* HeroAutocompleteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroAutocompleteDataSource.swift; sourceTree = "<group>"; };
 		A5D2A66E22BB80A200F6229A /* AddressAutocompleteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAutocompleteDataSource.swift; sourceTree = "<group>"; };
 		A5D2A67522BCB8E600F6229A /* SearchAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAddressViewController.swift; sourceTree = "<group>"; };
+		A5DC896C23EC22150050AC98 /* HBAutocomplete */ = {isa = PBXFileReference; lastKnownFileType = folder; name = HBAutocomplete; sourceTree = "<group>"; };
 		A5FF06B622C094C6003903C5 /* PlaceAutocompleteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAutocompleteDataSource.swift; sourceTree = "<group>"; };
 		A5FF06B822C09C82003903C5 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -103,7 +103,7 @@
 		8CE7000F1E126A09008086A4 = {
 			isa = PBXGroup;
 			children = (
-				A54C99C023EC1C840036CDA9 /* HBAutocomplete */,
+				A5DC896C23EC22150050AC98 /* HBAutocomplete */,
 				A54C99B923EC1BF00036CDA9 /* HBAutoComplete.podspec */,
 				8CE7001A1E126A09008086A4 /* AutocompleteTestProject */,
 				A5CB0CF122B0503400260BE5 /* HBAutoComplete */,
