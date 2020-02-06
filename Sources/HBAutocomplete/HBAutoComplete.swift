@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 public protocol HBAutocompleteDataSource:class {
     func getSuggestions(autocomplete:HBAutocomplete, input:String, completionHandler:@escaping(_ suggestions:[String], _ data:[String:Any]?, _ suggestionImages:[String:UIImage]?) -> Void)
@@ -28,9 +29,6 @@ public protocol HBAutocompleteStore {
     func addToHistory(input:String, inputData:Any?)
     func cleanHistory()
 }
-
-import UIKit
-//import PadamKit
 
 public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
