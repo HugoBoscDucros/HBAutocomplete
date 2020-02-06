@@ -15,7 +15,6 @@
 		8CE7004B1E154437008086A4 /* HerosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE7004A1E154437008086A4 /* HerosViewController.swift */; };
 		A51A57C222BB738E004DB0C3 /* AutocompleteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51A57C122BB738E004DB0C3 /* AutocompleteStore.swift */; };
 		A54C99BF23EC1BF00036CDA9 /* HBAutoComplete.podspec in Resources */ = {isa = PBXBuildFile; fileRef = A54C99B923EC1BF00036CDA9 /* HBAutoComplete.podspec */; };
-		A54C99C323EC1CB50036CDA9 /* HBAutocomplete in Frameworks */ = {isa = PBXBuildFile; productRef = A54C99C223EC1CB50036CDA9 /* HBAutocomplete */; };
 		A55B845623EC30BE009AAFBE /* HBAutocomplete in Frameworks */ = {isa = PBXBuildFile; productRef = A55B845523EC30BE009AAFBE /* HBAutocomplete */; };
 		A563A2002375D09E00114194 /* localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A563A2022375D09E00114194 /* localizable.strings */; };
 		A563A2062375D10D00114194 /* wording.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563A2052375D10D00114194 /* wording.swift */; };
@@ -63,8 +62,6 @@
 		8CE7004A1E154437008086A4 /* HerosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HerosViewController.swift; sourceTree = "<group>"; };
 		A51A57C122BB738E004DB0C3 /* AutocompleteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteStore.swift; sourceTree = "<group>"; };
 		A54C99B923EC1BF00036CDA9 /* HBAutoComplete.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HBAutoComplete.podspec; sourceTree = "<group>"; };
-		A563A1FE2375D09000114194 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		A563A1FF2375D09000114194 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A563A2012375D09E00114194 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/localizable.strings; sourceTree = "<group>"; };
 		A563A2032375D0AC00114194 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/localizable.strings; sourceTree = "<group>"; };
 		A563A2042375D0F300114194 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/localizable.strings; sourceTree = "<group>"; };
@@ -78,7 +75,9 @@
 		A5D2A67522BCB8E600F6229A /* SearchAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAddressViewController.swift; sourceTree = "<group>"; };
 		A5FF06B622C094C6003903C5 /* PlaceAutocompleteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAutocompleteDataSource.swift; sourceTree = "<group>"; };
 		A5FF06B822C09C82003903C5 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		D7A2925A23EC32AB0032353D /* HBAutocomplete */ = {isa = PBXFileReference; lastKnownFileType = folder; name = HBAutocomplete; sourceTree = "<group>"; };
+		D7A2925E23EC36900032353D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D7A2925F23EC36900032353D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D7A2926023EC37240032353D /* HBAutocomplete */ = {isa = PBXFileReference; lastKnownFileType = folder; name = HBAutocomplete; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,7 +94,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A54C99C323EC1CB50036CDA9 /* HBAutocomplete in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,10 +103,10 @@
 		8CE7000F1E126A09008086A4 = {
 			isa = PBXGroup;
 			children = (
-				D7A2925A23EC32AB0032353D /* HBAutocomplete */,
+				D7A2926023EC37240032353D /* HBAutocomplete */,
 				A54C99B923EC1BF00036CDA9 /* HBAutoComplete.podspec */,
 				8CE7001A1E126A09008086A4 /* AutocompleteTestProject */,
-				A5CB0CF122B0503400260BE5 /* HBAutoComplete */,
+				A5CB0CF122B0503400260BE5 /* Supporting files */,
 				8CE700191E126A09008086A4 /* Products */,
 				A54C99C123EC1CB50036CDA9 /* Frameworks */,
 			);
@@ -143,13 +141,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		A5CB0CF122B0503400260BE5 /* HBAutoComplete */ = {
+		A5CB0CF122B0503400260BE5 /* Supporting files */ = {
 			isa = PBXGroup;
 			children = (
 				A5CB0CF222B0503400260BE5 /* HBAutoComplete.h */,
 				A5CB0CF322B0503400260BE5 /* Info.plist */,
 			);
-			path = HBAutoComplete;
+			path = "Supporting files";
 			sourceTree = "<group>";
 		};
 		A5D2A67122BB8B2500F6229A /* AutocompleteDataSources */ = {
@@ -245,7 +243,6 @@
 			);
 			name = HBAutoComplete;
 			packageProductDependencies = (
-				A54C99C223EC1CB50036CDA9 /* HBAutocomplete */,
 			);
 			productName = HBAutoComplete;
 			productReference = A5CB0CF022B0503400260BE5 /* HBAutoComplete.framework */;
@@ -283,6 +280,7 @@
 				en,
 				fr,
 				es,
+				Base,
 			);
 			mainGroup = 8CE7000F1E126A09008086A4;
 			packageReferences = (
@@ -360,7 +358,7 @@
 		8CE7001F1E126A09008086A4 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A563A1FF2375D09000114194 /* en */,
+				D7A2925E23EC36900032353D /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -368,7 +366,7 @@
 		8CE700241E126A09008086A4 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A563A1FE2375D09000114194 /* en */,
+				D7A2925F23EC36900032353D /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -553,7 +551,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = HBAutoComplete/Info.plist;
+				INFOPLIST_FILE = "Supporting files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -591,7 +589,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = HBAutoComplete/Info.plist;
+				INFOPLIST_FILE = "Supporting files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -647,17 +645,14 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = ../HBAutocomplete;
 			requirement = {
-				kind = upToNextMajorVersion;
+				kind = versionRange;
+				maximumVersion = 1.1.0;
 				minimumVersion = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A54C99C223EC1CB50036CDA9 /* HBAutocomplete */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = HBAutocomplete;
-		};
 		A55B845523EC30BE009AAFBE /* HBAutocomplete */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A55B845423EC30BE009AAFBE /* XCRemoteSwiftPackageReference "HBAutocomplete" */;
