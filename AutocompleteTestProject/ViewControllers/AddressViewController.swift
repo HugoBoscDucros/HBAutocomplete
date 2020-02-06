@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreLocation
-import HBAutoComplete
+import HBAutocomplete
 import MapKit
 
 let GOOGLE_PLACE_API_KEY = ""

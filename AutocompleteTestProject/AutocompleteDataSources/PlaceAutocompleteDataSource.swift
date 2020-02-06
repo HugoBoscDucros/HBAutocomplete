@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import HBAutoComplete
+import HBAutocomplete
 import MapKit
 
 class PlaceAutocompleteDataSource: HBAutocompleteDataSource {

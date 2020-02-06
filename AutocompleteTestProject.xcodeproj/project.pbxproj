@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,28 +16,14 @@
 		A51A57C222BB738E004DB0C3 /* AutocompleteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51A57C122BB738E004DB0C3 /* AutocompleteStore.swift */; };
 		A563A2002375D09E00114194 /* localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A563A2022375D09E00114194 /* localizable.strings */; };
 		A563A2062375D10D00114194 /* wording.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563A2052375D10D00114194 /* wording.swift */; };
-		A5CB0CF422B0503400260BE5 /* HBAutoComplete.h in Headers */ = {isa = PBXBuildFile; fileRef = A5CB0CF222B0503400260BE5 /* HBAutoComplete.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A5CB0CF722B0503400260BE5 /* HBAutoComplete.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CB0CF022B0503400260BE5 /* HBAutoComplete.framework */; };
-		A5CB0CF822B0503400260BE5 /* HBAutoComplete.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A5CB0CF022B0503400260BE5 /* HBAutoComplete.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A5CB0CFE22B0505600260BE5 /* HBAutoComplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CB0CFD22B0505600260BE5 /* HBAutoComplete.swift */; };
+		A57E648B23EBE54200AE0C21 /* HBAutocomplete in Frameworks */ = {isa = PBXBuildFile; productRef = A57E648A23EBE54200AE0C21 /* HBAutocomplete */; };
 		A5D2A66A22BB79C800F6229A /* HeroTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D2A66922BB79C800F6229A /* HeroTableViewController.swift */; };
 		A5D2A66D22BB7B0700F6229A /* HeroAutocompleteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D2A66C22BB7B0700F6229A /* HeroAutocompleteDataSource.swift */; };
 		A5D2A66F22BB80A200F6229A /* AddressAutocompleteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D2A66E22BB80A200F6229A /* AddressAutocompleteDataSource.swift */; };
 		A5D2A67622BCB8E600F6229A /* SearchAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D2A67522BCB8E600F6229A /* SearchAddressViewController.swift */; };
-		A5D2A67822BCBE7F00F6229A /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D2A67722BCBE7F00F6229A /* InputField.swift */; };
 		A5FF06B722C094C6003903C5 /* PlaceAutocompleteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FF06B622C094C6003903C5 /* PlaceAutocompleteDataSource.swift */; };
 		A5FF06B922C09C82003903C5 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FF06B822C09C82003903C5 /* MapViewController.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		A5CB0CF522B0503400260BE5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8CE700101E126A09008086A4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A5CB0CEF22B0503400260BE5;
-			remoteInfo = HBAutoComplete;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		A5CB0CFC22B0503400260BE5 /* Embed Frameworks */ = {
@@ -46,7 +32,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A5CB0CF822B0503400260BE5 /* HBAutoComplete.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -67,15 +52,11 @@
 		A563A2032375D0AC00114194 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/localizable.strings; sourceTree = "<group>"; };
 		A563A2042375D0F300114194 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/localizable.strings; sourceTree = "<group>"; };
 		A563A2052375D10D00114194 /* wording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wording.swift; sourceTree = "<group>"; };
-		A5CB0CF022B0503400260BE5 /* HBAutoComplete.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HBAutoComplete.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A5CB0CF222B0503400260BE5 /* HBAutoComplete.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBAutoComplete.h; sourceTree = "<group>"; };
-		A5CB0CF322B0503400260BE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A5CB0CFD22B0505600260BE5 /* HBAutoComplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HBAutoComplete.swift; sourceTree = "<group>"; };
+		A57E648823EBE48C00AE0C21 /* HBAutocomplete */ = {isa = PBXFileReference; lastKnownFileType = folder; name = HBAutocomplete; path = "../Swift Packages/HBAutocomplete"; sourceTree = "<group>"; };
 		A5D2A66922BB79C800F6229A /* HeroTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroTableViewController.swift; sourceTree = "<group>"; };
 		A5D2A66C22BB7B0700F6229A /* HeroAutocompleteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroAutocompleteDataSource.swift; sourceTree = "<group>"; };
 		A5D2A66E22BB80A200F6229A /* AddressAutocompleteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAutocompleteDataSource.swift; sourceTree = "<group>"; };
 		A5D2A67522BCB8E600F6229A /* SearchAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAddressViewController.swift; sourceTree = "<group>"; };
-		A5D2A67722BCBE7F00F6229A /* InputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
 		A5FF06B622C094C6003903C5 /* PlaceAutocompleteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAutocompleteDataSource.swift; sourceTree = "<group>"; };
 		A5FF06B822C09C82003903C5 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -85,14 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5CB0CF722B0503400260BE5 /* HBAutoComplete.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A5CB0CED22B0503400260BE5 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				A57E648B23EBE54200AE0C21 /* HBAutocomplete in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,9 +76,10 @@
 		8CE7000F1E126A09008086A4 = {
 			isa = PBXGroup;
 			children = (
+				A57E648823EBE48C00AE0C21 /* HBAutocomplete */,
 				8CE7001A1E126A09008086A4 /* AutocompleteTestProject */,
-				A5CB0CF122B0503400260BE5 /* HBAutoComplete */,
 				8CE700191E126A09008086A4 /* Products */,
+				A57E648923EBE54200AE0C21 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,7 +87,6 @@
 			isa = PBXGroup;
 			children = (
 				8CE700181E126A09008086A4 /* AutocompleteTestProject.app */,
-				A5CB0CF022B0503400260BE5 /* HBAutoComplete.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -130,15 +104,11 @@
 			path = AutocompleteTestProject;
 			sourceTree = "<group>";
 		};
-		A5CB0CF122B0503400260BE5 /* HBAutoComplete */ = {
+		A57E648923EBE54200AE0C21 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A5CB0CF222B0503400260BE5 /* HBAutoComplete.h */,
-				A5CB0CF322B0503400260BE5 /* Info.plist */,
-				A5CB0CFD22B0505600260BE5 /* HBAutoComplete.swift */,
-				A5D2A67722BCBE7F00F6229A /* InputField.swift */,
 			);
-			path = HBAutoComplete;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		A5D2A67122BB8B2500F6229A /* AutocompleteDataSources */ = {
@@ -185,17 +155,6 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		A5CB0CEB22B0503400260BE5 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A5CB0CF422B0503400260BE5 /* HBAutoComplete.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
 		8CE700171E126A09008086A4 /* AutocompleteTestProject */ = {
 			isa = PBXNativeTarget;
@@ -209,30 +168,14 @@
 			buildRules = (
 			);
 			dependencies = (
-				A5CB0CF622B0503400260BE5 /* PBXTargetDependency */,
 			);
 			name = AutocompleteTestProject;
+			packageProductDependencies = (
+				A57E648A23EBE54200AE0C21 /* HBAutocomplete */,
+			);
 			productName = AutocompleteTestProject;
 			productReference = 8CE700181E126A09008086A4 /* AutocompleteTestProject.app */;
 			productType = "com.apple.product-type.application";
-		};
-		A5CB0CEF22B0503400260BE5 /* HBAutoComplete */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = A5CB0CFB22B0503400260BE5 /* Build configuration list for PBXNativeTarget "HBAutoComplete" */;
-			buildPhases = (
-				A5CB0CEB22B0503400260BE5 /* Headers */,
-				A5CB0CEC22B0503400260BE5 /* Sources */,
-				A5CB0CED22B0503400260BE5 /* Frameworks */,
-				A5CB0CEE22B0503400260BE5 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = HBAutoComplete;
-			productName = HBAutoComplete;
-			productReference = A5CB0CF022B0503400260BE5 /* HBAutoComplete.framework */;
-			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -248,12 +191,6 @@
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = PDQ5C92H2Y;
 						LastSwiftMigration = 1010;
-						ProvisioningStyle = Automatic;
-					};
-					A5CB0CEF22B0503400260BE5 = {
-						CreatedOnToolsVersion = 10.2.1;
-						DevelopmentTeam = PDQ5C92H2Y;
-						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -273,7 +210,6 @@
 			projectRoot = "";
 			targets = (
 				8CE700171E126A09008086A4 /* AutocompleteTestProject */,
-				A5CB0CEF22B0503400260BE5 /* HBAutoComplete */,
 			);
 		};
 /* End PBXProject section */
@@ -287,13 +223,6 @@
 				8CE700261E126A09008086A4 /* LaunchScreen.storyboard in Resources */,
 				8CE700231E126A09008086A4 /* Assets.xcassets in Resources */,
 				8CE700211E126A09008086A4 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A5CB0CEE22B0503400260BE5 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,24 +247,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A5CB0CEC22B0503400260BE5 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A5CB0CFE22B0505600260BE5 /* HBAutoComplete.swift in Sources */,
-				A5D2A67822BCBE7F00F6229A /* InputField.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		A5CB0CF622B0503400260BE5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A5CB0CEF22B0503400260BE5 /* HBAutoComplete */;
-			targetProxy = A5CB0CF522B0503400260BE5 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		8CE7001F1E126A09008086A4 /* Main.storyboard */ = {
@@ -473,7 +385,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -483,12 +396,14 @@
 		8CE700361E126A09008086A4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = PDQ5C92H2Y;
 				INFOPLIST_FILE = AutocompleteTestProject/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "S-H.AutocompleteTestProject";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
@@ -499,82 +414,18 @@
 		8CE700371E126A09008086A4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = PDQ5C92H2Y;
 				INFOPLIST_FILE = AutocompleteTestProject/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "S-H.AutocompleteTestProject";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		A5CB0CF922B0503400260BE5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = PDQ5C92H2Y;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = HBAutoComplete/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hbd.HBAutoComplete;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		A5CB0CFA22B0503400260BE5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = PDQ5C92H2Y;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = HBAutoComplete/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hbd.HBAutoComplete;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -599,16 +450,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A5CB0CFB22B0503400260BE5 /* Build configuration list for PBXNativeTarget "HBAutoComplete" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A5CB0CF922B0503400260BE5 /* Debug */,
-				A5CB0CFA22B0503400260BE5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A57E648A23EBE54200AE0C21 /* HBAutocomplete */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HBAutocomplete;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8CE700101E126A09008086A4 /* Project object */;
 }
