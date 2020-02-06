@@ -52,14 +52,7 @@ class InputField:NSObject, UISearchBarDelegate {
     }
     
     var font:UIFont? {
-//        if let textField = self.textField {
-//            return textField.font
-//        } else if let searchBar = self.searchBar {
-//            return searchBar.searchTextField.font
-//        } else {
-//            return nil
-//        }
-        return UIFont.systemFont(ofSize: 17)
+        return (self.textField ??  self.searchBar?.textField)?.font ?? UIFont.systemFont(ofSize: 17)
     }
     
     func resignFirstResponder() {
@@ -91,5 +84,24 @@ class InputField:NSObject, UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.delegate?.searchBarSearchButtonClicked?(searchBar)
+    }
+}
+
+extension UISearchBar {
+    var textField:UITextField? {
+        return self.find(UITextField.self)
+    }
+}
+
+extension UIView {
+    func find<T>(_ type:T.Type) -> T? {
+        for subview in self.subviews {
+            if let type = subview as? T {
+                return type
+            } else if let type = subview.find(T.self) {
+                return type
+            }
+        }
+        return nil
     }
 }
