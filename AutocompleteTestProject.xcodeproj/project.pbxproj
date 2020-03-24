@@ -61,7 +61,7 @@
 		8CE700481E15431B008086A4 /* AddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressViewController.swift; sourceTree = "<group>"; };
 		8CE7004A1E154437008086A4 /* HerosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HerosViewController.swift; sourceTree = "<group>"; };
 		A51A57C122BB738E004DB0C3 /* AutocompleteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteStore.swift; sourceTree = "<group>"; };
-		A5496C32242AB699002986FF /* HBAutocomplete */ = {isa = PBXFileReference; lastKnownFileType = folder; name = HBAutocomplete; sourceTree = "<group>"; };
+		A5496C36242ABC04002986FF /* HBAutocomplete */ = {isa = PBXFileReference; lastKnownFileType = folder; name = HBAutocomplete; sourceTree = "<group>"; };
 		A54C99B923EC1BF00036CDA9 /* HBAutoComplete.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HBAutoComplete.podspec; sourceTree = "<group>"; };
 		A563A2012375D09E00114194 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/localizable.strings; sourceTree = "<group>"; };
 		A563A2032375D0AC00114194 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/localizable.strings; sourceTree = "<group>"; };
@@ -103,7 +103,7 @@
 		8CE7000F1E126A09008086A4 = {
 			isa = PBXGroup;
 			children = (
-				A5496C32242AB699002986FF /* HBAutocomplete */,
+				A5496C36242ABC04002986FF /* HBAutocomplete */,
 				A54C99B923EC1BF00036CDA9 /* HBAutoComplete.podspec */,
 				8CE7001A1E126A09008086A4 /* AutocompleteTestProject */,
 				A5CB0CF122B0503400260BE5 /* Supporting files */,
@@ -645,9 +645,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = ../HBAutocomplete;
 			requirement = {
-				kind = versionRange;
-				maximumVersion = 1.1.0;
-				minimumVersion = 1.0.0;
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.0.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
