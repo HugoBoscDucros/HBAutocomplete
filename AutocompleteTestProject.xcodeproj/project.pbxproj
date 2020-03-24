@@ -643,9 +643,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = ../HBAutocomplete;
 			requirement = {
-				kind = versionRange;
-				maximumVersion = 1.1.0;
-				minimumVersion = 1.0.0;
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.0.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
