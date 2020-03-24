@@ -47,6 +47,7 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     
     //historical
     public var historicalImage:UIImage?
+    public var historicalImageTint: UIColor?
     
     
     //Graphical settings (you can set it in the view controller to change displaying style)
@@ -150,7 +151,7 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     
     //MARK: - Utils
     
-    func update(suggestion:String, data:Any?) {
+    public func update(suggestion:String, data:Any?) {
         self.textField.text! = suggestion
         self.selectedData = data
     }
@@ -234,6 +235,7 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
             let images = self.getSuggestionImages()
             if let image = images[lineString] {
                 cell.imageView?.image = image
+                cell.imageView?.tintColor = self.historicalImageTint
             }
         }
         

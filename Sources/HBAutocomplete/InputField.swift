@@ -94,7 +94,8 @@ extension UISearchBar {
     }
 }
 
-extension UIView {
+public extension UIView {
+    
     func find<T>(_ type:T.Type) -> T? {
         for subview in self.subviews {
             if let type = subview as? T {
