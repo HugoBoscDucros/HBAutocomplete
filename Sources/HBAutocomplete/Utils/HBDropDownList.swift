@@ -20,16 +20,16 @@ public class HBDropDownList:NSObject, UITableViewDataSource, UITableViewDelegate
     var isVisible = false
     var completionHandler:((String)->())?
     
-    private lazy var percistantInstance:HBDropDownList = {
+    private static var percistantInstance:HBDropDownList = {
        return HBDropDownList()
     }()
     
-    public init(delegate:HBDropDownListDelegate) {
+    public convenience init(delegate:HBDropDownListDelegate) {
         self.init()
         self.delegate = delegate
     }
     
-    private init() {
+    private override init() {
         self.tableView = UITableView()
         super.init()
         tableView.delegate = self
@@ -74,28 +74,28 @@ public class HBDropDownList:NSObject, UITableViewDataSource, UITableViewDelegate
         self.isVisible = false
     }
     
-    public static func show(below:UIView, withData:[String]? = nil, completionHandler:(String) -> ()) {
+    public static func show(below:UIView, withData:[String]? = nil, completionHandler:@escaping (String) -> ()) {
         self.percistantInstance.show(below:below, withData:withData)
         self.percistantInstance.completionHandler = completionHandler
     }
     
     public static func hide() {
-        self.percistantInstance.hide
+        self.percistantInstance.hide()
     }
     
     
     //MARK: - UITableViewDataSource
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    public func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
     }
     
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.textLabel?.text = self.data[indexPath.row]
         return cell
@@ -103,13 +103,13 @@ public class HBDropDownList:NSObject, UITableViewDataSource, UITableViewDelegate
     
     //MARK: - UITableViewDelegate
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.delegate?.didSelectItem(dropDownList: self, selectedString: self.data[indexPath.row], at: indexPath.row, forView:self.ownerView)
-        self.completionHandler?()
+        self.completionHandler?(self.data[indexPath.row])
         self.hide()
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.ownerView.frame.height
     }
 }
