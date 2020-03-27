@@ -17,12 +17,19 @@ public class HBDropDownList:NSObject, UITableViewDataSource, UITableViewDelegate
     var data = [String]()
     var tableView:UITableView
     weak var delegate:HBDropDownListDelegate?
-    var isVisible = false
+    public var isVisible = false
+    public static var isVisible:Bool {
+        return self.percistantInstance.isVisible
+    }
     var completionHandler:((String)->())?
     
     private static var percistantInstance:HBDropDownList = {
        return HBDropDownList()
     }()
+    
+    var label:UILabel? {
+        return ownerView.find(UILabel.self)
+    }
     
     public convenience init(delegate:HBDropDownListDelegate) {
         self.init()
@@ -97,6 +104,10 @@ public class HBDropDownList:NSObject, UITableViewDataSource, UITableViewDelegate
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
+        if let label = self.label {
+            cell.textLabel?.font = label.font
+            cell.textLabel?.textColor = label.textColor
+        }
         cell.textLabel?.text = self.data[indexPath.row]
         return cell
     }
