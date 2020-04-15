@@ -77,7 +77,6 @@
 		A5FF06B822C09C82003903C5 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D7A2925E23EC36900032353D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D7A2925F23EC36900032353D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		D7A2926023EC37240032353D /* HBAutocomplete */ = {isa = PBXFileReference; lastKnownFileType = folder; name = HBAutocomplete; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +102,6 @@
 		8CE7000F1E126A09008086A4 = {
 			isa = PBXGroup;
 			children = (
-				D7A2926023EC37240032353D /* HBAutocomplete */,
 				A54C99B923EC1BF00036CDA9 /* HBAutoComplete.podspec */,
 				8CE7001A1E126A09008086A4 /* AutocompleteTestProject */,
 				A5CB0CF122B0503400260BE5 /* Supporting files */,
