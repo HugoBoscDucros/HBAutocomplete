@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import HBAutoComplete
+import HBAutocomplete
 import MapKit
 
 class SearchAddressViewController: UITableViewController, HBAutoCompleteActionsDelegate {

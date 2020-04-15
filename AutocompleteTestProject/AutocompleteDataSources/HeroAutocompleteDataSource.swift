@@ -7,7 +7,8 @@
 //
 
 import Foundation
-import HBAutoComplete
+import HBAutocomplete
+import UIKit
 
 class HeroAutocompleteDataSource:HBAutocompleteDataSource {
     

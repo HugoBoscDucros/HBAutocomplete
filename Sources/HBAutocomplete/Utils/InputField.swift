@@ -7,14 +7,15 @@
 //
 
 import Foundation
+import UIKit
 
 typealias InputFieldDelegate = UITextFieldDelegate & UISearchBarDelegate
 
 class InputField:NSObject, UISearchBarDelegate {
     
-    private unowned var textField:UITextField?
+    private unowned var textField: UITextField?
     private unowned var searchBar: UISearchBar?
-    private var searchBarIsEditing:Bool = false
+    private var searchBarIsEditing: Bool = false
     
     weak var delegate:InputFieldDelegate? {
         didSet {
@@ -52,7 +53,7 @@ class InputField:NSObject, UISearchBarDelegate {
     }
     
     var font:UIFont? {
-         return (textField ?? searchBar!.subviews.first!.subviews.first(where: {$0 is UITextField}) as! UITextField).font
+        return (self.textField ??  self.searchBar?.textField)?.font ?? UIFont.systemFont(ofSize: 17)
     }
     
     func resignFirstResponder() {
@@ -84,5 +85,25 @@ class InputField:NSObject, UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.delegate?.searchBarSearchButtonClicked?(searchBar)
+    }
+}
+
+extension UISearchBar {
+    var textField:UITextField? {
+        return self.find(UITextField.self)
+    }
+}
+
+public extension UIView {
+    
+    func find<T>(_ type:T.Type) -> T? {
+        for subview in self.subviews {
+            if let type = subview as? T {
+                return type
+            } else if let type = subview.find(T.self) {
+                return type
+            }
+        }
+        return nil
     }
 }

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import HBAutoComplete
+import HBAutocomplete
 
 class HerosViewController: UIViewController {
     

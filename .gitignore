@@ -1,2 +1,6 @@
 
 AutocompleteTestProject\.xcodeproj/xcuserdata/hugobosc-ducros\.xcuserdatad/xcdebugger/
+
+.DS_Store
+
+AutocompleteTestProject.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved

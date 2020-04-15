@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import HBAutoComplete
+import HBAutocomplete
 import MapKit
 
 class PlaceAutocompleteDataSource: HBAutocompleteDataSource {
@@ -34,6 +34,5 @@ class PlaceAutocompleteDataSource: HBAutocompleteDataSource {
             completionHandler(suggestions,mapItemDictionary,nil)
         }
     }
-    
     
 }
