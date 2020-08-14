@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
- 	s.name					      = 'HBAutoComplete'
+ 	s.name					      = 'HBAutocomplete'
  	s.version          		= '1.0.4'
  	s.summary          		= 'iOS Autocomplete framework'
  	s.swift_version    		= '5'
