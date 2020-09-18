@@ -358,23 +358,11 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
         if self.customActionsAreAllaysVisible || input.count == 0 {
             suggestion = self.customActionsDescription
         }
-        //self.dataDictionary = [String:Any]()
         let (history, historyDatas) = self.store?.getHistory() ?? ([String](), nil)
-        if input == "" {
-            suggestion.append(contentsOf: self.favoritesDescription)
-            datas.merge(self.favoritesData ?? [String:Any]()){ (_,new) in new}
-            suggestion.append(contentsOf: history)
-            datas.merge(historyDatas ?? [String:Any]()){ (_,new) in new}
-        } else {
-//            suggestion.append(contentsOf:self.favoritesDescription.filter({$0.lowercased().contains(input.lowercased())}))
-//            suggestion.append(contentsOf: history.filter({$0.lowercased().contains(input.lowercased()) && !suggestion.map{$0.lowercased()}.contains($0.lowercased())}))
-//            datas.merge(self.favoritesData?.filter({$0.key.lowercased().contains(input.lowercased())}) ?? [String:Any]()){ (_,new) in new}
-//            datas.merge(historyDatas?.filter({$0.key.lowercased().contains(input.lowercased())}) ?? [String:Any]()){ (_,new) in new}
-            suggestion.appendFiltered(self.favoritesDescription, matching: input)
-            suggestion.appendFiltered(history, matching: input)
-            datas.mergeFilterd(self.favoritesData ?? [String:Any](), matching: input)
-            datas.mergeFilterd(historyDatas ?? [String:Any](), matching: input)
-        }
+        suggestion.appendFiltered(self.favoritesDescription, matching: input)
+        suggestion.appendFiltered(history, matching: input)
+        datas.mergeFilterd(self.favoritesData ?? [String:Any](), matching: input)
+        datas.mergeFilterd(historyDatas ?? [String:Any](), matching: input)
         return (suggestion,datas)
     }
 
@@ -453,13 +441,23 @@ extension Collection {
 }
 
 extension Array where Element == String {
-    mutating func appendFiltered(_ contentOf: [String],matching input:String, WithUnicity:Bool = true) {
-        self.append(contentsOf: contentOf.filter({$0.lowercased().contains(input.lowercased()) && (!self.map{$0.lowercased()}.contains($0.lowercased()) || WithUnicity)}))
+    mutating func appendFiltered(_ contentsOf: [String],matching input:String?) {
+        var filteredContent = contentsOf
+        if let input = input, !input.isEmpty {
+            filteredContent = filteredContent.filter({$0.lowercased().contains(input.lowercased())})
+        }
+        filteredContent = filteredContent.filter({!self.map{ value in value.lowercased()}.contains($0.lowercased())})
+        self.append(contentsOf:filteredContent)
     }
 }
 
 extension Dictionary where Key == String,Value == Any {
-    mutating func mergeFilterd(_ contentOf:[String:Any], matching input:String, WithUnicity:Bool = true) {
-        self.merge(contentOf.filter({$0.key.lowercased().contains(input.lowercased()) && (!self.map{$0.key.lowercased()}.contains($0.key.lowercased()) || WithUnicity)})){ (_,new) in new}
+    mutating func mergeFilterd(_ contentsOf:[String:Any], matching input:String?) {
+        var filteredContent = contentsOf
+        if let input = input, !input.isEmpty {
+            filteredContent = filteredContent.filter({$0.key.lowercased().contains(input.lowercased())})
+        }
+        filteredContent = filteredContent.filter({!self.map{value in value.key.lowercased()}.contains($0.key.lowercased())})
+        self.merge(filteredContent) { (_, new) in new}
     }
 }
