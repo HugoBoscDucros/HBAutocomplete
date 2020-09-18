@@ -410,6 +410,15 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
         self.loadSuggestions()
     }
     
+    public func setFavorites(data:[String:Any], images:[UIImage]? = nil) {
+        self.favoritesDescription = data.compactMap({$0.key})
+        self.favoritesData = data
+        if let images = images {
+            self.favoritesImages = images
+        }
+        self.loadSuggestions()
+    }
+    
     public func setCustomeActions(descriptions:[String], images:[UIImage]? = nil) {
         self.customActionsDescription = descriptions
         if let images = images {
