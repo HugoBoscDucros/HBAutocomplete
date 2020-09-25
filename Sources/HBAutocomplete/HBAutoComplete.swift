@@ -41,8 +41,8 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     private var customActionsImages:[UIImage] = []
     
     //favorites
-    private(set) var favoritesDescription:[String] = []
-    private(set) var favoritesData:[String:Any]?
+    public private(set) var favoritesDescription:[String] = []
+    public private(set) var favoritesData:[String:Any]?
     private var favoritesImages:[UIImage] = []
     
     //historical
