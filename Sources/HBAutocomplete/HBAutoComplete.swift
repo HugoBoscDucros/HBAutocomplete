@@ -95,7 +95,7 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     weak var templateView:UIView?
     
     private var tableView:UITableView {
-        print("tableView is \(externalTableView != nil ? "external":"internal")")
+        //print("tableView is \(externalTableView != nil ? "external":"internal")")
         return externalTableView ?? internalTableView
     }
     private lazy var internalTableView = UITableView()
@@ -105,7 +105,6 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     private var tableViewIsExternal:Bool {
         return self.tableView == externalTableView
     }
-    
     
     // MARK: - Instanciate method
     
@@ -377,17 +376,48 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     private func loadSuggestions(_ newInput:String? = nil) {
         let input = newInput ?? self.textField.text ?? ""
         if input.count >= self.minCharactersforDataSource, let dataSource = self.dataSource {
-            dataSource.getSuggestions(autocomplete:self, input: input, completionHandler: { (suggestions, data, suggestionImages) in
-                self.suggestionImages = suggestionImages
-                var (newSuggestion,storedDatas) = self.loadStoredResults(input: input)
-                for suggestion in suggestions {
-                    if !newSuggestion.map({$0.lowercased()}).contains(suggestion.lowercased()) {
-                        newSuggestion.append(suggestion)
-                    }
+            if #available(iOS 10.0, *) {
+                Dispatcher.main.run(delay: 0.5) {
+                    print("passed")
+                    dataSource.getSuggestions(autocomplete:self, input: input, completionHandler: { (suggestions, data, suggestionImages) in
+                        self.suggestionImages = suggestionImages
+                        var (newSuggestion,storedDatas) = self.loadStoredResults(input: input)
+                        for suggestion in suggestions {
+                            if !newSuggestion.map({$0.lowercased()}).contains(suggestion.lowercased()) {
+                                newSuggestion.append(suggestion)
+                            }
+                        }
+                        let newDatas = storedDatas.merging(data ?? [String:Any]()){ (_,new) in new}
+                        self.update(newSuggestion, data: newDatas)
+                    })
                 }
-                let newDatas = storedDatas.merging(data ?? [String:Any]()){ (_,new) in new}
-                self.update(newSuggestion, data: newDatas)
-            })
+            } else {
+                dataSource.getSuggestions(autocomplete:self, input: input, completionHandler: { (suggestions, data, suggestionImages) in
+                    self.suggestionImages = suggestionImages
+                    var (newSuggestion,storedDatas) = self.loadStoredResults(input: input)
+                    for suggestion in suggestions {
+                        if !newSuggestion.map({$0.lowercased()}).contains(suggestion.lowercased()) {
+                            newSuggestion.append(suggestion)
+                        }
+                    }
+                    let newDatas = storedDatas.merging(data ?? [String:Any]()){ (_,new) in new}
+                    self.update(newSuggestion, data: newDatas)
+                })
+            }
+            
+//            dataSource.getSuggestions(autocomplete:self, input: input, completionHandler: { (suggestions, data, suggestionImages) in
+//                self.suggestionImages = suggestionImages
+//                var (newSuggestion,storedDatas) = self.loadStoredResults(input: input)
+//                for suggestion in suggestions {
+//                    if !newSuggestion.map({$0.lowercased()}).contains(suggestion.lowercased()) {
+//                        newSuggestion.append(suggestion)
+//                    }
+//                }
+//                let newDatas = storedDatas.merging(data ?? [String:Any]()){ (_,new) in new}
+//                self.update(newSuggestion, data: newDatas)
+//            })
+            
+            
         } else  {
             let (suggestions, datas) = self.loadStoredResults(input: input)
             self.update(suggestions, data: datas)
