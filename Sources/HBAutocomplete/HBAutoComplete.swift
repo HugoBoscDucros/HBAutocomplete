@@ -315,6 +315,9 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     //MARK: - searchBar delegate
     
     public func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        if searchBar.text?.isEmpty ?? true {
+            self.loadSuggestions()
+        }
         self.searchBarDelegate?.searchBarTextDidBeginEditing?(searchBar)
         self.showTableViewIfNeeded()
     }
