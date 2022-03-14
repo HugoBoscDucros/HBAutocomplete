@@ -43,7 +43,7 @@ class HerosViewController: UIViewController {
         self.autocomplete.dataSource = dataSource
         //optionnal
         self.autocomplete.maxVisibleRow = 7
-        self.autocomplete.minCharactersforDataSource = 1
+        self.autocomplete.minCharactersforDataSource = 0
         self.autocomplete.historicalImage = UIImage(named: "SearchHistory")
         self.autocomplete.store = AutocompleteStore(.hero)
     }

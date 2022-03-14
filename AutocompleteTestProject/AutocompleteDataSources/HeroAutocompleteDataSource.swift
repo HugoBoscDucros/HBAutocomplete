@@ -19,6 +19,9 @@ class HeroAutocompleteDataSource:HBAutocompleteDataSource {
     }
     
     private func filteredList(for input:String) -> [String] {
+        if input.isEmpty {
+            return heroList
+        }
         var list = [String]()
         for hero in heroList {
             if hero.lowercased().contains(input.lowercased()) {
