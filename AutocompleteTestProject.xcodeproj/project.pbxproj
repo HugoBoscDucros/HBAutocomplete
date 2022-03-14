@@ -73,7 +73,7 @@
 		A5D2A66C22BB7B0700F6229A /* HeroAutocompleteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroAutocompleteDataSource.swift; sourceTree = "<group>"; };
 		A5D2A66E22BB80A200F6229A /* AddressAutocompleteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAutocompleteDataSource.swift; sourceTree = "<group>"; };
 		A5D2A67522BCB8E600F6229A /* SearchAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAddressViewController.swift; sourceTree = "<group>"; };
-		A5FC8F9B27DF538D0059BBB5 /* HBAutocomplete */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = HBAutocomplete; sourceTree = "<group>"; };
+		A5FC8F9C27DF60880059BBB5 /* HBAutocomplete */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = HBAutocomplete; sourceTree = "<group>"; };
 		A5FF06B622C094C6003903C5 /* PlaceAutocompleteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAutocompleteDataSource.swift; sourceTree = "<group>"; };
 		A5FF06B822C09C82003903C5 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D7A2925E23EC36900032353D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -103,7 +103,7 @@
 		8CE7000F1E126A09008086A4 = {
 			isa = PBXGroup;
 			children = (
-				A5FC8F9B27DF538D0059BBB5 /* HBAutocomplete */,
+				A5FC8F9C27DF60880059BBB5 /* HBAutocomplete */,
 				A54C99B923EC1BF00036CDA9 /* HBAutoComplete.podspec */,
 				8CE7001A1E126A09008086A4 /* AutocompleteTestProject */,
 				A5CB0CF122B0503400260BE5 /* Supporting files */,

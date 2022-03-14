@@ -140,7 +140,7 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     }
     
     private func setInternalTableViewStyle() {
-        let templateView = self.templateView ?? textField.view
+        guard let templateView = self.templateView ?? textField.view else {return}
         self.internalTableView.layer.cornerRadius = templateView.layer.cornerRadius
         self.internalTableView.layer.borderWidth = templateView.layer.borderWidth
         self.internalTableView.layer.borderColor = templateView.layer.borderColor
@@ -177,16 +177,16 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
     // MARK: - Show/Hide tableView suggestions
     
     private func updateTableViewFrameIfNeeded() -> UIView? {
-        let templateView = self.templateView ?? textField.view
-        if !self.tableViewIsExternal, let (hyperView, origin) = self.getHyperViewAndOrigin(from: templateView) {
-            var tableViewSize = templateView.frame.size
-            tableViewSize.height *= CGFloat(min(self.suggestions.count, self.maxVisibleRow))
-            var tableViewOrigin = origin
-            tableViewOrigin.y += templateView.frame.height
-            self.tableView.frame = CGRect(origin: tableViewOrigin, size: tableViewSize)
-            return hyperView
-        }
-        return nil
+        guard let templateView = self.templateView ?? textField.view,
+              !self.tableViewIsExternal,
+              let (hyperView, origin) = self.getHyperViewAndOrigin(from: templateView)
+        else {return nil}
+        var tableViewSize = templateView.frame.size
+        tableViewSize.height *= CGFloat(min(self.suggestions.count, self.maxVisibleRow))
+        var tableViewOrigin = origin
+        tableViewOrigin.y += templateView.frame.height
+        self.tableView.frame = CGRect(origin: tableViewOrigin, size: tableViewSize)
+        return hyperView
     }
     
     private func showTableViewIfNeeded() {
@@ -274,7 +274,7 @@ public class HBAutocomplete:NSObject, UITextFieldDelegate, UITableViewDataSource
         } else if let templateView = self.templateView {
             return templateView.bounds.size.height
         }
-        return self.textField.view.layer.bounds.height
+        return self.textField.view?.layer.bounds.height ?? .zero
     }
     
     
